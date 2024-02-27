@@ -7,6 +7,11 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
+
+  features: #the package name,
+    path: ../features # the directory path,not the package name
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,4 +1,4 @@
-name: FlutterModularizationTemplate
+name: flutter_modularization_template
 publish_to: 'none'
 version: 1.0.0+1
 environment:
@@ -7,8 +7,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.6
-  applications: #the package name,
-    path: ./applications # the directory path,not the package name
+
 
 dev_dependencies:
   flutter_test:

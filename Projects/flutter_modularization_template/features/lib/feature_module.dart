@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-
-class MyModules extends StatelessWidget {
-  const MyModules({super.key});
+class FeaturesModule extends StatelessWidget {
+  const FeaturesModule({super.key});
 
 @override
 Widget build(BuildContext context) {
@@ -20,8 +19,8 @@ class MyHomePage extends StatelessWidget {
     return const Scaffold(
       body: Center(
         child: Text(
-          'Hello World',
-          style: TextStyle(fontSize: 24),
+          'Hello , I am From Feature Module',
+          style: TextStyle(fontSize: 15),
         ),
       ),
     );

@@ -93,7 +93,6 @@ after that open the terminal and move to this direcotory and create your target.
 
 Note that Though to be a `packge` the `lib` direcoty is optional,but since this package will contain the `platform` sub package so it must need a `lib/main.dart`,otherwise,it will not the apk or the target platform app will not build and run.
 
-then must add this module dependecy to the `flutter` project root pubspec.yaml
 
 
 
