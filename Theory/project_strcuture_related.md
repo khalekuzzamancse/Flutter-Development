@@ -127,7 +127,11 @@ Since the Android Studio is follow the Gradle project strcuture,so open the   op
 
 
 
-
+### Configurating the desktop target
+- Go the direcory where we want to create the target direcory
+- `flutter config --enable-windows-desktop`
+- `flutter create . --platforms=windows`
+- `flutter run -d windows`
 
 
 
