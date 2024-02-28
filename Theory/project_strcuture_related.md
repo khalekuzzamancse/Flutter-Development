@@ -67,6 +67,17 @@ Note that the :
 `.idea`,`.vs_code`,`yyy.iml`  these are IDE specfic file,if you removed them by mistake,and the IDE do not show the project structure,then clean the project using 
 `flutter clean` and close the IDE and open again,that will be worked insha-allah.
 
+Note that if by mistake delete the ".iml" file and your project is not show well android studio then:
+- close the Android Studio
+- Open the project in File Explorer 
+- Delete the .idea folder 
+- Delete the .dart_tool folder
+- Open the Project again in Android Studio
+
+
+
+
+
 adding android target
 `flutter create --platforms=android .`
 note the dot(.) represent the current directory so make sure 
@@ -93,7 +104,16 @@ after that open the terminal and move to this direcotory and create your target.
 
 Note that Though to be a `packge` the `lib` direcoty is optional,but since this package will contain the `platform` sub package so it must need a `lib/main.dart`,otherwise,it will not the apk or the target platform app will not build and run.
 
+### Configure Run in android studio 
+if we run not changed the project structure then we have to do:
 
+- Go to Edit Configaration
+- Click Add ->Flutter
+- Give a name
+- Add the Entry Point where the main.dart is
+- Ex as:`E:\projectes\flutter_projects\flutter_ui_samples\applications\lib\main.dart`
+
+so here we are mentioning the whole path relative to the PC,not relative to the project only.
 
 
 
