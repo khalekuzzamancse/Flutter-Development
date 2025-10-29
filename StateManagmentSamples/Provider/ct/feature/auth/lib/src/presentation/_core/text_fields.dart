@@ -6,7 +6,7 @@ class PasswordField extends StatefulWidget {
   final Function(String) onInputChanged;
   final String? hints;
 
-  const PasswordField({Key? key, required this.onInputChanged,  this.hints})
+  const PasswordField({Key? key, required this.onInputChanged, this.hints})
       : super(key: key);
 
   @override
@@ -32,12 +32,10 @@ class PasswordFieldState extends State<PasswordField> {
           obscureText: _isObscured,
           onChanged: widget.onInputChanged,
           decoration: InputDecoration(
-            hintText:widget.hints,
-            hintStyle: TextStyle(
-                color: Colors.black.withOpacity(0.5)
-            ),
+            hintText: widget.hints,
+            hintStyle: TextStyle(color: Colors.black.withOpacity(0.5)),
             contentPadding:
-            const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: const BorderSide(
@@ -54,8 +52,7 @@ class PasswordFieldState extends State<PasswordField> {
                   color: AppColor.primary,
                   width: 2), // Thicker black border for focused state
             ),
-            suffixIcon:
-            IconButton(
+            suffixIcon: IconButton(
               icon: Icon(
                 _isObscured ? Icons.visibility_off : Icons.visibility,
                 color: Colors.grey,
@@ -72,7 +69,6 @@ class PasswordFieldState extends State<PasswordField> {
     );
   }
 }
-
 
 class CustomOutlinedTextField extends StatefulWidget {
   final Function(String) onChange;
@@ -122,7 +118,8 @@ class CustomOutlinedTextFieldState extends State<CustomOutlinedTextField> {
             hintStyle: TextStyle(
               color: Colors.black.withOpacity(0.5),
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: const BorderSide(color: AppColor.primary),
@@ -141,7 +138,6 @@ class CustomOutlinedTextFieldState extends State<CustomOutlinedTextField> {
     );
   }
 }
-
 
 class CustomTextField extends StatelessWidget {
   final String label;
@@ -170,13 +166,15 @@ class CustomTextField extends StatelessWidget {
           obscureText: obscureText,
           decoration: InputDecoration(
             isDense: true,
-            hintText: "  $label",//TODO:Proxy padding by trailing space, fix it later
+            hintText: "  $label",
+            //TODO:Proxy padding by trailing space, fix it later
             hintStyle: const TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w300,
               color: Colors.blue,
             ),
-            contentPadding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            contentPadding:
+                const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
               borderSide: const BorderSide(color: Colors.blue),
@@ -189,32 +187,26 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               borderSide: const BorderSide(color: Colors.blue, width: 2),
             ),
-            prefixIcon: leadingIcon==null?null:
-            Container(
-              decoration: BoxDecoration(
-                color: AppColor.primary,
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: Icon(
-                leadingIcon,
-                color: Colors.white,
-                size: 20,
-              ),
-            ),
+            prefixIcon: leadingIcon == null
+                ? null
+                : Icon(
+                    leadingIcon,
+                    color: AppColor.primary,
+                    size: 20,
+                  ),
             suffixIcon: trailingIcon,
           ),
         ),
         if (error != null)
           _Error(
             text: error!,
-            color:Colors.red,
-            padding: const EdgeInsets.only(left: 10,right: 2),
+            color: Colors.red,
+            padding: const EdgeInsets.only(left: 10, right: 2),
           )
       ],
     );
   }
 }
-
 
 class AuthTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -231,7 +223,9 @@ class AuthTextField extends StatefulWidget {
     required this.keyboardType,
     this.isPasswordField = false,
     this.errorText,
-    this.onDone, required this.label, this.leadingIcon,
+    this.onDone,
+    required this.label,
+    this.leadingIcon,
   }) : super(key: key);
 
   @override
@@ -239,32 +233,43 @@ class AuthTextField extends StatefulWidget {
 }
 
 class AuthTextFieldState extends State<AuthTextField> {
-  late  bool _obscureText = widget.isPasswordField?true:false;
+  late bool _obscureText = widget.isPasswordField ? true : false;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       child: BasicTextField(
-          hints:widget.label,
-          keyboardType: widget.keyboardType??TextInputType.text,
+          property: const BasicTextFieldProperty(
+            leadingIconColor: AppColor.primary,
+          ),
+          hints: widget.label,
+          keyboardType: widget.keyboardType ?? TextInputType.text,
           leadingIcon: widget.leadingIcon,
           error: widget.errorText,
           obscureText: _obscureText,
-          controller:widget.controller,
-          trailingIcon: widget.isPasswordField ? IconButton(
-              icon: Icon(
-                  _obscureText ? Icons.visibility_off : Icons.visibility),
-              onPressed: () {
-                setState(() {
-                  _obscureText = !_obscureText; // Toggle visibility
-                });
-              }
-          ):null
-      ),
+          controller: widget.controller,
+          trailingIcon: widget.isPasswordField
+              ? InkWell(
+                  onTap: () {
+                    setState(() {
+                      _obscureText = !_obscureText; // Toggle visibility
+                    });
+                  },
+                  child: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: AppColor.primary,
+                  ),
+                )
+              : const Icon(
+                  //Just to keep the height same when there nis no trailing icon
+                  Icons.visibility,
+                  color: Colors.transparent,
+                )),
     );
   }
 }
+
 class BasicTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hints;
@@ -280,7 +285,7 @@ class BasicTextField extends StatefulWidget {
     required this.controller,
     required this.hints,
     this.keyboardType = TextInputType.text,
-    this.property=const BasicTextFieldProperty(),
+    this.property = const BasicTextFieldProperty(),
     this.leadingIcon,
     required this.obscureText,
     this.error,
@@ -305,14 +310,15 @@ class BasicTextFieldState extends State<BasicTextField> {
   @override
   Widget build(BuildContext context) {
     final error = widget.error;
-    final property=widget.property;
+    final property = widget.property;
 
     return Column(
       children: [
         Container(
           decoration: BoxDecoration(
-              border: Border.all(color:property.borderColor, width: property.borderWidth),
-              borderRadius:property.borderRadius),
+              border: Border.all(
+                  color: property.borderColor, width: property.borderWidth),
+              borderRadius: property.borderRadius),
           child: Row(
             children: [
               const SizedBox(width: 12),
@@ -345,7 +351,7 @@ class BasicTextFieldState extends State<BasicTextField> {
           _Error(
             text: error,
             color: property.errorColor,
-            padding: const EdgeInsets.only(left: 10,right: 2),
+            padding: const EdgeInsets.only(left: 10, right: 2),
           )
       ],
     );
@@ -357,7 +363,8 @@ class _Error extends StatelessWidget {
   final Color color;
   final EdgeInsets padding;
 
-  const _Error({required this.text, required this.padding, required this.color});
+  const _Error(
+      {required this.text, required this.padding, required this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -366,11 +373,12 @@ class _Error extends StatelessWidget {
       padding: padding,
       child: Text(
         text,
-        style:  TextStyle(color:color),
+        style: TextStyle(color: color),
       ),
     );
   }
 }
+
 class BasicTextFieldProperty {
   final Color borderColor;
   final double borderWidth;
@@ -379,7 +387,8 @@ class BasicTextFieldProperty {
   final Color errorColor;
 
   const BasicTextFieldProperty({
-    this.borderColor = const Color(0xFFB3B3B3), // approx Colors.grey.withOpacity(0.8)
+    this.borderColor =
+        const Color(0xFFB3B3B3), // approx Colors.grey.withOpacity(0.8)
     this.borderWidth = 2.0,
     this.borderRadius = const BorderRadius.all(Radius.circular(50)),
     Color? leadingIconColor,

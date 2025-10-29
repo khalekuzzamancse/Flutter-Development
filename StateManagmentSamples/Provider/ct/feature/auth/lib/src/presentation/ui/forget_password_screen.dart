@@ -22,37 +22,37 @@ class ForgetPasswordScreen extends StatelessWidget {
     return GenericScreen(
         content:  Padding(
       padding: const EdgeInsets.all(18.0),
-      child: SingleChildScrollView(
         child: Center(
-          child: ConstrainedBox(
-                  constraints:const BoxConstraints(
-                      maxWidth: 500
-                  ),
-            child: _LayoutStrategy(
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+            constraints:const BoxConstraints(
+            maxWidth: 500
+        ),
+              child: _LayoutStrategy(
+                  header: const _Header(),
+                  phoneNoField: AuthTextField(
+                    controller: inputController,
+                    label: 'Phone number or email',
+                    leadingIcon: Icons.person,
+                    keyboardType: TextInputType.number,
+                    errorText: error,
+                    onDone: () {
 
-                header: const _Header(),
-                phoneNoField: AuthTextField(
-                  controller: inputController,
-                  label: 'Phone number or email',
-                  leadingIcon: Icons.person,
-                  keyboardType: TextInputType.number,
-                  errorText: error,
-                  onDone: () {
+                    },),
+                  action: RoundedButton(
+                    label: 'Next',
+                    height:48,onPressed: ()async {
+                    context.push(SetNewPasswordScreen());
+                    FocusScope.of(context).unfocus();//Hide soft keyboard
+                    if(await  controller.sendVerificationCode()){
+                      //context.push(SetNewPasswordScreen());
 
-                  },),
-                action: RoundedButton(
-                  label: 'Next',
-                  height:48,onPressed: ()async {
-                  context.push(SetNewPasswordScreen());
-                  FocusScope.of(context).unfocus();//Hide soft keyboard
-                  if(await  controller.sendVerificationCode()){
-                    //context.push(SetNewPasswordScreen());
-
-                  }
-                })),
+                    }
+                  })),
+            ),
           ),
         ),
-      ),
+
     ));
   }
 }

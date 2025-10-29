@@ -1,4 +1,3 @@
-
 import 'package:core/ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import '../_core/text_fields.dart';
@@ -33,85 +32,73 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: _LayoutStrategy(
-              header: const _Header(),
-              phoneNoField: AuthTextField(
-                controller: _usernameController,
-                label: 'Phone number or email',
-                leadingIcon: Icons.person,
-                keyboardType: TextInputType.number,
-                errorText: error.userIdError,
-                onDone: () {
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Center(
+          child: SingleChildScrollView(
+            child: ConstrainedBox(
+                constraints:const BoxConstraints(
+                    maxWidth: 500
+                ),
+              child: _LayoutStrategy(
+                  header: const _Header(),
+                  phoneNoField: AuthTextField(
+                    controller: _usernameController,
+                    label: 'Phone number or email',
+                    leadingIcon: Icons.person,
+                    keyboardType: TextInputType.text,
+                    errorText: error.userIdError,
+                    onDone: () {
 
-                },),
-              passwordField:AuthTextField(
-                label: 'Password',
-                controller: _passwordController,
-                isPasswordField: true,
-                leadingIcon:Icons.lock ,
-                keyboardType: null,
-                errorText:error.passwordError,
-                onDone: () {
+                    },),
+                  passwordField:AuthTextField(
+                    label: 'Password',
+                    controller: _passwordController,
+                    isPasswordField: true,
+                    leadingIcon:Icons.lock ,
+                    keyboardType: null,
+                    errorText:error.passwordError,
+                    onDone: () {
 
-                },
-              ),
-              resetPasswordAction: CustomTextButton(
-                label: "Forget Password ?",
-                onPressed: () {
-                  Navigation.navigateToResetPassword(context);
-                },
+                    },
+                  ),
+                  resetPasswordAction: CustomTextButton(
+                    label: "Forget Password ?",
+                    onPressed: () {
+                      Navigation.navigateToResetPassword(context);
+                    },
 
-              ),
-              actions: Column(
-                children: [
-                  RoundedButton(
-                      label: 'Login',
-                      height: 48,
-                      onPressed: () async{
-                        // Hides the keyboard
-                        FocusScope.of(context).unfocus();
-                        //TODO:Fix about accessing context in async block
-                        final success= await controller.login(_usernameController.text,_passwordController.text);
-                        // if(user!=null){
-                        //   if(!user.isVerified){
-                        //     //Need to sent verification code so need registration controller
-                        //     final  registerController = Get.put(RegisterController());
-                        //     registerController.onMobileChanged(user.mobile);
-                        //     registerController.sendVerificationWithMobileNo(user.mobile);
-                        //   //  Navigation.gotoVerifyCode(context);
-                        //   }
-                        //   else{
-                        //     //update token and userId
-                        //    // Get.find<GlobalController>().updateAuthInfo(AuthInfo(token: user.token??'nullAtLoginScreen', currentUserId: user.id));
-                        //
-                        //     if(context.mounted){
-                        //       Navigator.pop(context); //do not option to go back Login screen again
-                        //      // Navigation.goToHome(context);
-                        //     }
-                        //
-                        //   }
-                        // }
-                      }
                   ),
-                  const SpacerVertical(16),
-                  const Text('Or',
-                      style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.w600,color:AppColor.headingText)
-                  ),
-                    const SpacerVertical(16),
-                  RoundedButton(
-                      label: 'Create an account',
-                      height: 48,
-                      onPressed: () {
-                        Navigation.navigateToRegister(context);
-                      }
-                  ),
-                ],
-              )),
+                  actions: Column(
+                    children: [
+                      RoundedButton(
+                          label: 'Login',
+                          height: 48,
+                          onPressed: () async{
+                            // Hides the keyboard
+                            FocusScope.of(context).unfocus();
+                            //TODO:Fix about accessing context in async block
+                            final success= await controller.login(_usernameController.text,_passwordController.text);
+                          }
+                      ),
+                      const SpacerVertical(16),
+                      const Text('Or',
+                          style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,color:AppColor.headingText)
+                      ),
+                        const SpacerVertical(16),
+                      RoundedButton(
+                          label: 'Create an account',
+                          height: 48,
+                          onPressed: () {
+                            Navigation.navigateToRegister(context);
+                          }
+                      ),
+                    ],
+                  )),
+            ),
+          ),
         ),
       ),
     );
@@ -129,32 +116,25 @@ class _LayoutStrategy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(
-            maxWidth: 500, // Enforce max width
-            minWidth: 300, // Enforce min width
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              header, // Display the header widget
-              const SizedBox(height: 32),
-              phoneNoField, // Phone number field
-              const SizedBox(height: 16),
-              passwordField, // Password field
-              const SizedBox(height: 8),
-              Align(
-                alignment: Alignment.centerRight,
-                child: resetPasswordAction,
-              ), // Forget password field
-              const SizedBox(height: 32),
-              actions, // Login and register buttons
-            ],
-          ),
-        ),
-      );
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
+      children: [
+        header, // Display the header widget
+        const SizedBox(height: 32),
+        phoneNoField, // Phone number field
+        const SizedBox(height: 16),
+        passwordField, // Password field
+        const SizedBox(height: 8),
+        Align(
+          alignment: Alignment.centerRight,
+          child: resetPasswordAction,
+        ), // Forget password field
+        const SizedBox(height: 32),
+        actions, // Login and register buttons
+      ],
+    );
   }
 }
 

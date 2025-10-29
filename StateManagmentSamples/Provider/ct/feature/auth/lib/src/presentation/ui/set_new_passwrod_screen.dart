@@ -1,4 +1,3 @@
-
 import 'package:core/ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,36 +20,45 @@ class SetNewPasswordScreen extends StatelessWidget {
     return GenericScreen(content:  SingleChildScrollView(
       child: Padding(
           padding: const EdgeInsets.all(24.0),
-          child: Column(
-            children: [
-              const _Header(),
-              const SpacerVertical(32),
-              AuthTextField(
-                controller: otpController,
-                keyboardType:TextInputType.number ,
-                label: 'OTP Code',
+          child: Center(
+            child: SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints:const BoxConstraints(
+                  maxWidth: 500
               ),
-              const SpacerVertical(8),
-              AuthTextField(
-                controller: passwordController,
-                keyboardType: TextInputType.visiblePassword,
-                label: 'New Password',
+                child: Column(
+                  children: [
+                    const _Header(),
+                    const SpacerVertical(32),
+                    AuthTextField(
+                      controller: otpController,
+                      keyboardType:TextInputType.number ,
+                      label: 'OTP Code',
+                    ),
+                    const SpacerVertical(8),
+                    AuthTextField(
+                      controller: passwordController,
+                      keyboardType: TextInputType.visiblePassword,
+                      label: 'New Password',
+                    ),
+                    const SpacerVertical(64),
+                    RoundedButton(
+                        label: 'Finish',
+                        height: 48,
+                        onPressed: () async{
+                          Navigator.pop(context); //Go to reset password
+                          Navigator.pop(context); //Go to Login
+                          // if(await controller.resetPassword()){
+                          //   Navigator.pop(context); //Go to reset password
+                          //   Navigator.pop(context); //Go to Login
+                          //
+                          // }
+                        }
+                    )
+                  ],
+                ),
               ),
-              const SpacerVertical(64),
-              RoundedButton(
-                  label: 'Finish',
-                  height: 48,
-                  onPressed: () async{
-                    Navigator.pop(context); //Go to reset password
-                    Navigator.pop(context); //Go to Login
-                    // if(await controller.resetPassword()){
-                    //   Navigator.pop(context); //Go to reset password
-                    //   Navigator.pop(context); //Go to Login
-                    //
-                    // }
-                  }
-              )
-            ],
+            ),
           )
 
       ),

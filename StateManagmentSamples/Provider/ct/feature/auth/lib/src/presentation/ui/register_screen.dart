@@ -161,7 +161,7 @@ class _PasswordFieldState extends State<_PasswordField> {
       trailingIcon: IconButton(
         icon: Icon(
           _isObscured ? Icons.visibility_off : Icons.visibility,
-          color: Colors.grey,
+          color: AppColor.primary,
         ),
         onPressed: () {
           setState(() {
