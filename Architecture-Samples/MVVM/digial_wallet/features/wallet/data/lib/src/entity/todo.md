@@ -1,0 +1,1 @@
+ Should define the own model as  entity,Due to limited time using `Domain` models as entity
