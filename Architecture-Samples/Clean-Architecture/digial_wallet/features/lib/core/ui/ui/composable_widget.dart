@@ -1061,34 +1061,16 @@ class NestedVerticalScroller extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints(
-        maxHeight: maxHeight,
-        minHeight: minHeight,
-        maxWidth: maxWidth,
-        minWidth: minWidth,
-      ),
-      width: width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (header != null) header!,
-          if (header != null) SizedBox(height: headerGap),
-          Expanded(
-            child: ListView.builder(
-              physics: AlwaysScrollableScrollPhysics(),
-              itemCount: children.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.only(bottom: childGap),
-                  child: children[index],
-                );
-              },
-            ),
-          ).modifier(listModifier??Modifier())
-        ],
-      ),
-    );
+    return ListView.builder(
+      physics: AlwaysScrollableScrollPhysics(),
+      itemCount: children.length,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: childGap),
+          child: children[index],
+        );
+      },
+    ).modifier(listModifier??Modifier());
   }
 }
 

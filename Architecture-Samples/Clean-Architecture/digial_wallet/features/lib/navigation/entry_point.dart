@@ -5,11 +5,7 @@ class EntryPoint extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return materialTheme(
-    //   content:
-    //
-    // );
-   return RootNavigation();
+   return SafeArea(child: RootNavigation());
   }
 }
 

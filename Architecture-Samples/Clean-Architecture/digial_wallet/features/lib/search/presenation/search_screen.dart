@@ -8,7 +8,6 @@ import '../domain/model/product_model.dart';
 import 'axis_data_model.dart';
 import 'factory.dart';
 
-
 //@formatter:off
 class SearchScreen extends StatelessWidget {
    final controller=PresentationFactory.createController();
@@ -20,41 +19,38 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  return  Scaffold(
-        appBar: CustomTopBar(
-          title: Text("Search",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16)),
-            leading: IconButton(icon: Icon(Icons.arrow_back),onPressed: () {}),
-        ),
-        body:( ColumnBuilder(
-            arrangement: Arrangement.spaceBy(8),
-            modifier:Modifier().padding(left: 8, right: 8).verticalScrollable())
 
-        + StreamBuilderStrategyWithSnackBar<TabModel?>(
-                messageStream: controller.statusMessage,
-                dataStream: controller.tabs,
-                builder: (context, snapshot) {
-                  final data = snapshot.data;
-                  if (data == null) return EmptyContentScreen();
-                  return  CustomTabBar(
-                      timePeriods: data.tabs,
-                      selectedPeriod: data.selected,
-                      onPeriodSelected: (period) {
-                        controller.onSelected(period);
-                      });
-                })
-            +VSpacer(8)
-            + StreamBuilderStrategyWithSnackBar<AxisData?>(
-                messageStream: controller.statusMessage,
-                dataStream: controller.axisData,
-                builder: (context, snapshot) {
-                  final data = snapshot.data;
-                  if (data == null) return EmptyContentScreen();
-                  return  CustomPaint(
+   return Scaffold(
+        appBar: CustomTopBar(
+          title: Text("Search",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16))),
+      body:   Column(
+        children: [
+          StreamBuilderStrategyWithSnackBar<TabModel?>(
+              messageStream: controller.statusMessage,
+              dataStream: controller.tabs,
+              builder: (context, snapshot) {
+                final data = snapshot.data;
+                if (data == null) return EmptyContentScreen();
+                return  CustomTabBar(
+                    timePeriods: data.tabs,
+                    selectedPeriod: data.selected,
+                    onPeriodSelected: (period) {
+                      controller.onSelected(period);
+                    });
+              }),
+          StreamBuilderStrategyWithSnackBar<AxisData?>(
+              messageStream: controller.statusMessage,
+              dataStream: controller.axisData,
+              builder: (context, snapshot) {
+                final data = snapshot.data;
+                if (data == null) return EmptyContentScreen();
+                return  CustomPaint(
                     size: Size(280, 200),
                     painter: _LineChartPathPainter(xAxisData: data.xAxisData, yAxisData: data.yAxisData));
-                })
-            +VSpacer(8)
-            + StreamBuilderStrategyWithSnackBar<List<Product>>(
+              }),
+          Expanded(
+            flex: 1,
+            child: StreamBuilderStrategyWithSnackBar<List<Product>>(
                 messageStream: controller.statusMessage,
                 isLoadingStream: controller.isLoading,
                 dataStream: controller.products,
@@ -62,8 +58,10 @@ class SearchScreen extends StatelessWidget {
                   final data = snapshot.data;
                   if (data == null) return EmptyContentScreen();
                   return _SpendingNRecentProduct(products: data);
-                }))
-            .build()
+                }),
+          )
+        ],
+      ),
     );
 
   }
@@ -76,6 +74,7 @@ class _SpendingNRecentProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      //RecentProduct(products: products);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -87,7 +86,7 @@ class _SpendingNRecentProduct extends StatelessWidget {
             buttonColor: Colors.blue,
             onPayEarlyPressed: () {}),
         SizedBox(height: 16),
-        RecentProduct(products: products)
+        Expanded(child: RecentProduct(products: products))
       ],
     );
   }
@@ -148,6 +147,34 @@ class RecentProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+   return LayoutBuilder(
+      builder: (context, constraints) {
+        // You can get the height of the parent widget from constraints.maxHeight
+        double availableHeight = constraints.maxHeight;
+        print("Height is:$availableHeight");
+        return    Column(
+          children: [
+            Text("Recent Products", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold))
+                .modifier(Modifier().align(Alignment.centerLeft)),
+            Expanded(
+              child: ListView.builder(
+                physics: AlwaysScrollableScrollPhysics(),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 16),
+                    child: ProductWidget(product: products[index]),
+                  );
+                },
+              ).modifier(Modifier()
+
+              ),
+            ),
+          ],
+        ) .modifier(Modifier().shadow(height:availableHeight,backgroundColor: Colors.grey[200]!,radius: 12));
+      },
+    );
+
     return NestedVerticalScroller(
       listModifier:Modifier()
           .shadow(height: 300,backgroundColor: Colors.grey[200]!,radius: 12),
