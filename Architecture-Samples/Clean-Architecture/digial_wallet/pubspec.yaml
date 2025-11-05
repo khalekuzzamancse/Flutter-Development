@@ -14,6 +14,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - packages/applications/a.png
-    - packages/applications/photo.jpg

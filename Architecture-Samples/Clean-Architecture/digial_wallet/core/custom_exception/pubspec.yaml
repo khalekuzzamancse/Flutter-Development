@@ -1,6 +1,0 @@
-name: custom_exception
-description: Define the common custom exception that can be used with any dart/flutter project
-version: 1.0.0
-environment:
-  sdk: '>=3.3.0 <4.0.0'
-
