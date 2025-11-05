@@ -1,0 +1,21 @@
+name: core_ui
+publish_to: 'none'
+version: 1.0.0+1
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  ComposableWidget: #the package name,
+    path: ../composable-widget # the directory path,not the package name
+
+  custom_exception:
+    path: ../../core/custom_exception # Ensure the path to the local package is correct
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
