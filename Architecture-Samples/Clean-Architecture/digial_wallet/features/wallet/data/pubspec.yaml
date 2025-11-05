@@ -1,0 +1,13 @@
+name: wallet_data
+publish_to: 'none'
+version: 1.0.0+1
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  network:
+    path: ../../../core/network
+
+  wallet_domain:
+    path: ../domain
+
+
