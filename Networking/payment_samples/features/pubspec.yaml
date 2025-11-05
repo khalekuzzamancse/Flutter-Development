@@ -1,0 +1,17 @@
+name: features
+description: "A new Flutter project."
+version: 1.0.0+1
+environment:
+  sdk: ^3.8.0
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  get: ^4.6.5
+  web_socket_channel: ^3.0.1 #By dart.dev team
+  http: ^1.2.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
