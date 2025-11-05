@@ -1,0 +1,26 @@
+name: applications
+publish_to: 'none'
+
+version: 1.0.0+1
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+#  features: #the package name,
+#    path: ../features # the directory path,not the package name
+  navigation: #the package name,
+      path: ../features/navigation # the directory path,not the package name
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  assets:
+    - lib/photo.jpg
+  uses-material-design: true
+
+

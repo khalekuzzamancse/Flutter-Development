@@ -1,0 +1,15 @@
+name: network
+description: Expose the network IO operation so that clients can depend on it without any third party libraries, it is basically the facade/adapter
+publish_to: none #Need to add because publish package can not have path dependencies
+version: 1.0.0
+
+environment:
+  sdk: '>=3.3.0 <4.0.0'
+
+dependencies:
+  http: ^1.2.2 # For network IO, equivalent to Ktor-client
+  custom_exception:
+    path: ../custom_exception # Ensure the path to the local package is correct
+
+dev_dependencies:
+  test: ^1.25.8 # For unit test
