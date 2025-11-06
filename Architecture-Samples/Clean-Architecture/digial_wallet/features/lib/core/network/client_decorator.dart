@@ -1,4 +1,4 @@
-part of '../../core_network.dart';
+part of '../core_network.dart';
 
 abstract interface class AuthExpireObserver{
   void onSessionExpire();

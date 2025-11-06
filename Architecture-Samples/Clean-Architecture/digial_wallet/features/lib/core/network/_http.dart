@@ -1,4 +1,4 @@
-part of '../../core_network.dart';
+part of '../core_network.dart';
 class _HttpClient implements NetworkClient {
   final _class = '_HttpClient';
 

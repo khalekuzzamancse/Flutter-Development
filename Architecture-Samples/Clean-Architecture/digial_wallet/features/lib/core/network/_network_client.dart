@@ -1,4 +1,4 @@
-part of '../../core_network.dart';
+part of '../core_network.dart';
 
 abstract interface class  NetworkClient {
   Future<String> getOrThrow({required String url,  Headers? headers});
