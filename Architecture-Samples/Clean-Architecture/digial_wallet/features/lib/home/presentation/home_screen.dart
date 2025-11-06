@@ -1,6 +1,8 @@
 import 'package:features/core/core_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../domain/models.dart';
+
 class HomeController {
   final user = 'George';
   final cards = [
@@ -259,14 +261,7 @@ class _ActiveLoanSection extends StatelessWidget {
 
 
 
-//@formatter:off
-class LoanModel {
-  final String model, imageLink,price,date;
-  final int rating,ratingMax;
 
-  const LoanModel({required this.model, required this.imageLink, required this.price,
-    required this.date, required this.rating, required this.ratingMax});
-}
 //@formatter:off
 class _LoanItem extends StatelessWidget {
   final LoanModel data;

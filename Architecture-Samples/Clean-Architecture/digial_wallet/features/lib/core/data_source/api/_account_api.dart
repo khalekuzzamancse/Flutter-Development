@@ -1,16 +1,13 @@
 part of '../data_source.dart';
 
 abstract interface class AccountApi {
-  Future<PaginationWrapper<List<CardEntity>>> readCardsOrThrow({String? nextUrl});
-  Future<PaginationWrapper<List<ActiveLoan>>> readActiveLoansOrThrow({String? nextUrl});
+  Future<List<CardEntity>> readCardsOrThrow();
+  Future<List<ActiveLoanEntity>> readActiveLoansOrThrow();
   Future<SpendSummaryEntity> readSummaryOrThrow();
   Future<List<BreakdownEntity>> readBreakDownsOrThrow();
   Future<SpendModelEntity> readSpendOrThrow();
 }
 
-class CardEntity {}
-
-class ActiveLoan {}
 
 class SpendSummaryEntity {
   final Map<String, TimePeriodEntity> data;
@@ -64,4 +61,17 @@ class ScheduleEntity {
     required this.fourthSchedule,
     required this.fifthSchedule,
   });
+}
+//@formatter:off
+class CardEntity {
+  final String cardName,cardNo,dueDate,amount, type;
+  CardEntity( {required this.type, required this.cardName, required this.cardNo, required this.dueDate, required this.amount});
+}
+//@formatter:off
+class ActiveLoanEntity {
+  final String model, imageLink,price,date;
+  final int rating,ratingMax;
+
+  const ActiveLoanEntity({required this.model, required this.imageLink, required this.price,
+    required this.date, required this.rating, required this.ratingMax});
 }

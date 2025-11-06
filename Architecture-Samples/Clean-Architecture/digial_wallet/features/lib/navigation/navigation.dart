@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:features/core/core_ui.dart';
 import '../search/presenation/search_screen.dart';
 import '../wallet/presentation/wallet_screen.dart';
-import '../home/home_screen.dart';
+import '../home/presentation/home_screen.dart';
 import 'material_theme.dart';
 
 //The concept  is from

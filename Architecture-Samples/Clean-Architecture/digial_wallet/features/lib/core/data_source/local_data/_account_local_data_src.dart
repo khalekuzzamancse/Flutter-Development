@@ -6,17 +6,46 @@ class AccountLocalDataSource implements AccountApi {
   static AccountApi create() => AccountLocalDataSource._();
 
   @override
-  Future<PaginationWrapper<List<ActiveLoan>>> readActiveLoansOrThrow(
-      {String? nextUrl}) {
-    // TODO: implement readActiveLoansOrThrow
-    throw UnimplementedError();
+  Future<List<ActiveLoanEntity>> readActiveLoansOrThrow() async{
+  return  [
+      ActiveLoanEntity(
+        model: "Model X",
+        imageLink:
+        "https://img.freepik.com/premium-vector/red-city-car-vector-illustration_648968-44.jpg?w=740",
+        price: "\$399/M",
+        date: "5th OCT",
+        rating: 48,
+        ratingMax: 60,
+      ),
+      ActiveLoanEntity(
+        model: "Nokia Y",
+        imageLink:
+        "https://auspost.com.au/shop/static/WFS/AusPost-Shop-Site/-/AusPost-Shop-auspost-B2CWebShop/en_AU/feat-cat/mobile-phones/category-carousel/MP_UnlockedPhones_3.jpg",
+        price: "\$299/M",
+        date: "20 OCT",
+        rating: 36,
+        ratingMax: 50,
+      ),
+    ];
   }
 
   @override
-  Future<PaginationWrapper<List<CardEntity>>> readCardsOrThrow(
-      {String? nextUrl}) {
-    // TODO: implement readCardsOrThrow
-    throw UnimplementedError();
+  Future<List<CardEntity>> readCardsOrThrow()async {
+    return [
+      CardEntity(
+          cardName: 'VISA',
+          cardNo: '* * * 3854',
+          dueDate: '10 OCT',
+          amount: '5001.86',
+          type: "visa"
+      ),
+      CardEntity(
+          cardName: 'VISA',
+          cardNo: '* * * 3854',
+          dueDate: '10 OCT',
+          amount: '5001.86',
+          type:"visa"),
+    ];
   }
 
   @override
