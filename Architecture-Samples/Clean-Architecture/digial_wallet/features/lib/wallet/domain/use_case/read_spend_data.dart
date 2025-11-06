@@ -4,5 +4,5 @@ import '../repository/repository.dart';
 class ReadSpendDataUseCase{
   final Repository repository;
   ReadSpendDataUseCase(this.repository);
-  Future<SpendData>  execute()=>repository.readSpendData();
+  Future<SpendModel>  execute()=>repository.readSpendData();
 }

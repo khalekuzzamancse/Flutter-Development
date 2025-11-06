@@ -20,7 +20,7 @@ class WalletScreen extends StatelessWidget {
         actions:  [IconButton(icon: Icon(Icons.account_circle), onPressed: () {}).modifier(Modifier().padding(right: 16))],
       ),
       body:(ColumnBuilder(arrangement: Arrangement.spaceBy(8),modifier: Modifier().verticalScrollable())
-          + StreamBuilderStrategyWithSnackBar<SpendData?>(
+          + StreamBuilderStrategyWithSnackBar<SpendModel?>(
               messageStream: controller.statusMessage,
               dataStream: controller.spendData,
               builder: (context, snapshot) {
@@ -29,7 +29,7 @@ class WalletScreen extends StatelessWidget {
                 return   _Bars(period:data.period, typeOfCost: 'Spend Chart',
                     costs:data.spend.data.firstOrNull?.toCost()??[], currencyType:data.currency);
               })
-          + StreamBuilderStrategyWithSnackBar<List<BreakdownItemData>>(
+          + StreamBuilderStrategyWithSnackBar<List<BreakdownModel>>(
               messageStream: controller.statusMessage,
               dataStream: controller.breakdowns,
               builder: (context, snapshot) {
@@ -101,7 +101,7 @@ class _Bar extends StatelessWidget {
  */
 //@formater:off
 class _BreakDown extends StatelessWidget {
-  final List<BreakdownItemData> itemData;
+  final List<BreakdownModel> itemData;
 
   const _BreakDown({required this.itemData});
 

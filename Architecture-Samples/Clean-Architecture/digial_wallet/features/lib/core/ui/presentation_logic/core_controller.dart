@@ -24,6 +24,7 @@ mixin CoreControllerMixin implements CoreController {
   }
 
   void onException(Object exception) {
+    Logger.on("onException", "$exception");
     if (exception is CustomException) {
       updateMessage(MessageToUi.error(exception.message));
     } else {

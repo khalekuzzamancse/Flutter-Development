@@ -10,7 +10,7 @@ class SearchRepositoryImpl implements Repository {
 
   @override
   Future<SpendSummaryModel?> readChartData() async {
-    final entity = await _accountApi.readSpendSummaryOrThrow();
+    final entity = await _accountApi.readSummaryOrThrow();
     final mappedData = entity.data.map(
       (key, value) => MapEntry(
         key,

@@ -1,7 +1,7 @@
 //@formater:off
-class BreakdownItemData {
+class BreakdownModel {
   final String label;
   final String percentage;
 
-  BreakdownItemData({required this.label, required this.percentage});
+  BreakdownModel({required this.label, required this.percentage});
 }

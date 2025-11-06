@@ -5,5 +5,5 @@ import '../repository/repository.dart';
 class ReadBreakDownUseCase{
   final Repository repository;
   ReadBreakDownUseCase(this.repository);
-  Future<List<BreakdownItemData>>  execute()=>repository.readBreakDownData();
+  Future<List<BreakdownModel>>  execute()=>repository.readBreakDownData();
 }

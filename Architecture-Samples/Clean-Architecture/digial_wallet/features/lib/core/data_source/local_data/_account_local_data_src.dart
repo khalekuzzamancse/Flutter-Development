@@ -20,7 +20,7 @@ class AccountLocalDataSource implements AccountApi {
   }
 
   @override
-  Future<SpendSummaryEntity> readSpendSummaryOrThrow() async {
+  Future<SpendSummaryEntity> readSummaryOrThrow() async {
     final Map<String, dynamic> jsonData = jsonDecode(_jsonData);
     return _parser(jsonData);
   }
@@ -53,4 +53,54 @@ class AccountLocalDataSource implements AccountApi {
       "timePeriods": ["1W", "1M", "3M", "6M", "1Y", "ALL"],
       "selectedTimePeriod": "1W"
     }''';
+
+  @override
+  Future<List<BreakdownEntity>> readBreakDownsOrThrow({String? nextUrl}) async {
+    return [
+      BreakdownEntity(label: "Food & Drinks", percentage: "45%"),
+      BreakdownEntity(label: "Dresses", percentage: "25%"),
+      BreakdownEntity(label: "Transport", percentage: "20%"),
+      BreakdownEntity(label: "Others", percentage: "10%")
+    ];
+  }
+
+  @override
+  Future<SpendModelEntity> readSpendOrThrow() async {
+    dynamic jsonString =  '''
+  {
+    "period": "This month",
+    "currency": "\$",
+    "spend": {
+        "data": [
+            {
+                "1st_schedule": 400.00,
+                "2nd_schedule": 600.00,
+                "3rd_schedule": 1200.00,
+                "4th_schedule": 1800.00,
+                "5th_schedule": 2600.00
+            }
+        ]
+    }
+  }
+  ''';
+   final json=jsonDecode(jsonString);
+    final spendJson = json['spend'] as Map<String, dynamic>;
+    final sourceList = spendJson['data'] as List<dynamic>;
+    final data = sourceList.map((item) {
+      final map = item as Map<String, dynamic>;
+      return ScheduleEntity(
+        firstSchedule: (map['1st_schedule'] as num).toDouble(),
+        secondSchedule: (map['2nd_schedule'] as num).toDouble(),
+        thirdSchedule: (map['3rd_schedule'] as num).toDouble(),
+        fourthSchedule: (map['4th_schedule'] as num).toDouble(),
+        fifthSchedule: (map['5th_schedule'] as num).toDouble(),
+      );
+    }).toList();
+
+    return SpendModelEntity(
+      period: json['period'] as String,
+      currency: json['currency'] as String,
+      spend: data,
+    );
+  }
 }
