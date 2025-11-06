@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'core_ui.dart';
-import '../presentation_logic/message_to_ui.dart';
+part of '../../core_ui.dart';
 
 class StreamBuilderStrategyWithSnackBar<T> extends StatelessWidget {
   final Stream<MessageToUi?> messageStream; // Nullable MessageToUi stream
@@ -25,7 +23,7 @@ class StreamBuilderStrategyWithSnackBar<T> extends StatelessWidget {
         if (messageSnapshot.hasData && messageSnapshot.data != null) {
           _showSnackBar(context, messageSnapshot.data!);
         }
-        // Wrap the StreamBuilderStrategy to handle loading and data streams
+        // Wrap the StreamBuilderStrategy to handle loading and source streams
         return StreamBuilderStrategy<T>(
           isLoadingStream: isLoadingStream,
           dataStream: dataStream,
@@ -82,26 +80,26 @@ class StreamBuilderStrategyWithSnackBar<T> extends StatelessWidget {
 /// a flexible and reusable approach to managing stream states in the UI.
 ///
 /// This widget wraps a `StreamBuilder` and provides additional, user-friendly
-/// functionality for handling asynchronous data streams.
+/// functionality for handling asynchronous source streams.
 ///
 /// `StreamBuilderStrategy` is designed to make handling streams in the UI more
 /// streamlined by:
-///  - Displaying a loading progress indicator when data is loading.
+///  - Displaying a loading progress indicator when source is loading.
 ///  - Showing an error message automatically if any error occurs in the stream.
-///  - Providing a clear "no data" message if the stream completes without data.
+///  - Providing a clear "no source" message if the stream completes without source.
 ///
 /// ## Usage
 /// `StreamBuilderStrategy` simplifies your `StreamBuilder` usage by managing
-/// common stream states. You need only provide the main data stream and an
+/// common stream states. You need only provide the main source stream and an
 /// optional loading stream to handle loading conditions independently:
 ///
 /// ```dart
 /// StreamBuilderStrategy<List<MyModel>>(
 ///   isLoadingStream: controller.isLoading, // Optional loading stream
-///   dataStream: controller.myDataStream,   // Required data stream
+///   dataStream: controller.myDataStream,   // Required source stream
 ///   builder: (context, snapshot) {
-///     // Widget to display when data is successfully loaded.
-///     return MyDataWidget(data: snapshot.data!); //Guaranteed that data is available so need not extra checking
+///     // Widget to display when source is successfully loaded.
+///     return MyDataWidget(source: snapshot.source!); //Guaranteed that source is available so need not extra checking
 ///   },
 /// )
 /// ```
@@ -110,10 +108,10 @@ class StreamBuilderStrategyWithSnackBar<T> extends StatelessWidget {
 /// - `isLoadingStream` (optional): A stream of boolean values indicating
 ///   whether loading is in progress. If provided and loading is true,
 ///   a loading indicator is displayed until loading completes.
-/// - `dataStream` (required): The primary data stream to display.
-/// - `builder`: A function that builds the widget for successfully loaded data.
+/// - `dataStream` (required): The primary source stream to display.
+/// - `builder`: A function that builds the widget for successfully loaded source.
 ///
-/// `StreamBuilderStrategy` handles loading, error, and no-data states
+/// `StreamBuilderStrategy` handles loading, error, and no-source states
 /// internally, making it ideal for simplifying asynchronous stream handling
 /// in a user-friendly way.
 
@@ -160,7 +158,7 @@ class StreamBuilderStrategy<T> extends StatelessWidget {
 }
 
 /// `DataStreamBuilder` is a streamlined widget that only calls the builder
-/// function when data is available, allowing you to safely use `snapshot.data!`
+/// function when source is available, allowing you to safely use `snapshot.source!`
 /// directly without additional null or loading state checks.
 class DataStreamBuilder<T> extends StatelessWidget {
   final Stream<T> stream;
@@ -178,7 +176,7 @@ class DataStreamBuilder<T> extends StatelessWidget {
       stream: stream,
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting)
-          // Show loading if waiting on data
+          // Show loading if waiting on source
           return LoadingUi();
 
 // Occurrences of snapshot.hasError and !snapshot.hasData are rare if the Stream API is managed carefully.
@@ -187,7 +185,7 @@ class DataStreamBuilder<T> extends StatelessWidget {
           // SBE = StreamBuilder Error. This message is intended for developers to aid in debugging.
           return EmptyContentScreen(text: "Something is went wrong, Error code : SBE");
         else if (!snapshot.hasData)
-          //SBHNDE=SteamBuilder has not data Error
+          //SBHNDE=SteamBuilder has not source Error
           return EmptyContentScreen(text: "Something is went wrong, Error code : SBHNDE");
         else {
           return builder(context, snapshot);

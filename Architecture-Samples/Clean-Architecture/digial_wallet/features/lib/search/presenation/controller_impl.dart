@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:features/core/core_language.dart';
+import 'package:features/core/core_presentation_logic.dart';
 import 'package:features/search/presenation/time_period_model.dart';
-
-import '../../core/ui/presentation_logic/core_controller.dart';
-import '../../core/ui/presentation_logic/state_flow.dart';
 import '../../di_container.dart';
 import '../domain/model/chart_data_model.dart';
 import '../domain/model/product_model.dart';
@@ -12,19 +11,19 @@ import 'controller.dart';
 
 //TODO: Implement to dispose the stream
 class ControllerImpl with CoreControllerMixin implements Controller {
-  final _products = MutableStateFlow<List<Product>>(List.empty());
-  final _graphData = MutableStateFlow<ChartData?>(null);
+  final _products = MutableStateFlow<List<ProductModel>>(List.empty());
+  final _graphData = MutableStateFlow<SpendSummaryModel?>(null);
   final _tabs = MutableStateFlow<TabModel?>();
   final _axisData=MutableStateFlow<AxisData?>(null);
 
   var _selected='1W';
-  ChartData? _data=null;
+  SpendSummaryModel? _data=null;
 
   @override
-  Stream<ChartData?> get graphData => _graphData.asStateFlow();
+  Stream<SpendSummaryModel?> get graphData => _graphData.asStateFlow();
 
   @override
-  Stream<List<Product>> get products => _products.asStateFlow();
+  Stream<List<ProductModel>> get products => _products.asStateFlow();
 
   @override
   Stream<TabModel?> get tabs => _tabs.asStateFlow();
@@ -46,8 +45,11 @@ class ControllerImpl with CoreControllerMixin implements Controller {
       _graphData.update(graphData);
       _updateState();
       final products = await DiContainer.readProducts().execute();
+      print("readProducts:$products");
+      Logger.on("readProducts", "$products");
       _products.update(products);
     } catch (e) {
+      print("readProducts:$e");
     } finally {
       stopLoading();
     }

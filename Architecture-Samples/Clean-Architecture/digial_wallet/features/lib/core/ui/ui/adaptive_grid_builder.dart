@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+part of '../../core_ui.dart';
 Widget adaptiveGridDemo() {
   _AdaptiveGrid grid = AdaptiveGridBuilderImpl()
       .setMinWidth(150)

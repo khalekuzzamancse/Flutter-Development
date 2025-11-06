@@ -1,11 +1,10 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../core/ui/ui/modifier.dart';
-import '../core/ui/ui/navigation.dart';
+import 'package:features/core/core_ui.dart';
 import '../search/presenation/search_screen.dart';
 import '../wallet/presentation/wallet_screen.dart';
-import 'home_screen.dart';
+import '../home/home_screen.dart';
 import 'material_theme.dart';
 
 //The concept  is from

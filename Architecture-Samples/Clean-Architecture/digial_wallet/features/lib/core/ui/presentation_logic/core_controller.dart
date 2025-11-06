@@ -1,9 +1,4 @@
-import 'dart:async';
-import 'package:features/core/ui/presentation_logic/state_flow.dart';
-
-import '../../language/custom_exception.dart';
-import 'message_to_ui.dart';
-
+part of '../../core_presentation_logic.dart';
 abstract class CoreController {
   Stream<bool> get isLoading;
   Stream<MessageToUi?> get statusMessage;

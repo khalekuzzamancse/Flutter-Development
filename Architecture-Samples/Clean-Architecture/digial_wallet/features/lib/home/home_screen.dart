@@ -1,7 +1,5 @@
+import 'package:features/core/core_ui.dart';
 import 'package:flutter/material.dart';
-
-import '../core/ui/ui/composable_widget.dart';
-import '../core/ui/ui/modifier.dart';
 
 class HomeController {
   final user = 'George';
@@ -85,7 +83,7 @@ class CardInfo {
   final String cardName,cardNo,dueDate,amount;
   final Color color;//TODO:Controller belongs to `Presentation` Logic layer that is UI framework independent
   //so should not keep the color reference at controller, instead card type or metadata should be kept based on
-  //these data ui will determine the color,but for testing purpose storing color here
+  //these source ui will determine the color,but for testing purpose storing color here
   //How ever since color code is just text, so color code can be kept...
 
   CardInfo( {required this.color, required this.cardName, required this.cardNo, required this.dueDate, required this.amount});

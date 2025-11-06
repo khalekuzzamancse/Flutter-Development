@@ -1,7 +1,4 @@
-import 'package:flutter/material.dart' as flutter;
-import 'package:flutter/material.dart';
-
-import 'modifier.dart';
+part of '../../core_ui.dart';
 
 //Put all in a single file so that easily can paste other projects
 //If we use abstract class then we can not add overloaded operator method to
@@ -710,7 +707,7 @@ class TextBuilder  {
 
   Widget build() {
     if (_data == null) {
-      throw Exception('Text data is required');
+      throw Exception('Text source is required');
     }
     return flutter.Text(
       _data!,
@@ -953,7 +950,7 @@ class EmptyWidget extends StatelessWidget {
     Text("See all ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))]),
 
     children: loanItems.map((item)=>
-    _LoanItem(data: LoanModel(model: item.model, imageLink:item.imageLink,
+    _LoanItem(source: LoanModel(model: item.model, imageLink:item.imageLink,
     price:item.price, date: item.date,
     rating: item.rating, ratingMax: item.ratingMax))).toList(),
 

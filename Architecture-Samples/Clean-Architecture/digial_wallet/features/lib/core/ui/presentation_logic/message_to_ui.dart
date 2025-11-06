@@ -1,3 +1,4 @@
+part of '../../core_presentation_logic.dart';
 class MessageToUi {
   final String message;
   final MessageType type;

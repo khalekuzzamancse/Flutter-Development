@@ -1,18 +1,14 @@
+import 'package:features/core/core_ui.dart';
 import 'package:flutter/material.dart';
-import '../../core/ui/ui/composable_widget.dart';
-import '../../core/ui/ui/core_ui.dart';
-import '../../core/ui/ui/modifier.dart';
-import '../../core/ui/ui/stream_builder_strategies.dart';
 import '../domain/model/break_down_model.dart';
 import '../domain/model/spend_model.dart';
 import 'factory.dart';
-
 
 //@formatter:off
 class WalletScreen extends StatelessWidget {
   final controller=PresentationFactory.createController();
   WalletScreen(){
-    //TODO:Not good idea to fetch data within UI, refactor later
+    //TODO:Not good idea to fetch source within UI, refactor later
     controller.read();
   }
   @override

@@ -1,4 +1,5 @@
-import 'dart:async';
+part of '../../core_presentation_logic.dart';
+
 
 /// A simple caching stream controller, inspired by RxDart's `BehaviorSubject` and Kotlin’s `MutableStateFlow`,
 /// designed to emit the latest value to new subscribers and prevent unwanted behavior caused by missing initial events.

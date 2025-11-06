@@ -7,7 +7,8 @@ dependencies:
     flutter:
       sdk: flutter
     go_router: ^14.3.0
-    http: ^1.2.2 # For network IO, equivalent to Ktor-client
+    http: ^1.2.2
+    web_socket_channel: ^3.0.1 #By dart.dev team
 
 
 

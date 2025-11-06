@@ -1,9 +1,6 @@
+import 'package:features/core/core_ui.dart';
 import 'package:features/search/presenation/time_period_model.dart';
 import 'package:flutter/material.dart';
-import '../../core/ui/ui/composable_widget.dart';
-import '../../core/ui/ui/core_ui.dart';
-import '../../core/ui/ui/modifier.dart';
-import '../../core/ui/ui/stream_builder_strategies.dart';
 import '../domain/model/product_model.dart';
 import 'axis_data_model.dart';
 import 'factory.dart';
@@ -13,7 +10,7 @@ class SearchScreen extends StatelessWidget {
    final controller=PresentationFactory.createController();
 
    SearchScreen({super.key}){
-     //TODO:Not a good practise to read data to UI element,refactor later
+     //TODO:Not a good practise to read source to UI element,refactor later
      controller.read();
    }
 
@@ -50,7 +47,7 @@ class SearchScreen extends StatelessWidget {
               }),
           Expanded(
             flex: 1,
-            child: StreamBuilderStrategyWithSnackBar<List<Product>>(
+            child: StreamBuilderStrategyWithSnackBar<List<ProductModel>>(
                 messageStream: controller.statusMessage,
                 isLoadingStream: controller.isLoading,
                 dataStream: controller.products,
@@ -69,7 +66,7 @@ class SearchScreen extends StatelessWidget {
 
 
 class _SpendingNRecentProduct extends StatelessWidget {
-  final List<Product> products;
+  final List<ProductModel> products;
   const _SpendingNRecentProduct({super.key, required this.products});
 
   @override
@@ -138,7 +135,7 @@ final Widget labelSpending,dueDate,cost,action;
 }
 
 class RecentProduct extends StatelessWidget {
-  final List<Product> products;
+  final List<ProductModel> products;
 
   const RecentProduct({
     Key? key,
@@ -190,7 +187,7 @@ class RecentProduct extends StatelessWidget {
 
 //@formatter:off
 class ProductWidget extends StatelessWidget {
-  final Product product;
+  final ProductModel product;
   const ProductWidget({Key? key, required this.product}) : super(key: key);
 
   @override
@@ -380,7 +377,7 @@ class _LineChartPathPainter extends CustomPainter {
   }
 
 //TODO: Currently using exactly 5 levels for Y-axis labels. Consider enhancing this logic for dynamic levels when time permits
-  //This is challenging without knowing   information about the data such as what the max value can be
+  //This is challenging without knowing   information about the source such as what the max value can be
   //what the max size can be the `yAxisData`
   void drawYLabels(Canvas canvas, Size size, int maxY) {
     final textPainter = TextPainter(

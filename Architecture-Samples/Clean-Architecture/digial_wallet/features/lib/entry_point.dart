@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'navigation.dart';
+import 'navigation/navigation.dart';
 class EntryPoint extends StatelessWidget {
   const EntryPoint({super.key});
 

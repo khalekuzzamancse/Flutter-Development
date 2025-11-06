@@ -1,5 +1,4 @@
-import 'package:flutter/material.dart';
-
+part of '../../core_ui.dart';
 class EmptyContentScreen extends StatelessWidget {
   final String? text;
   final IconData? icon;

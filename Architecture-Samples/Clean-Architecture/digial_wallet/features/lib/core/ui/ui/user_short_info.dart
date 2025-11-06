@@ -1,6 +1,5 @@
-// @formatter:off
-import 'package:flutter/material.dart';
-//@formatter:off
+part of '../../core_ui.dart';
+
 class UserShortInfo extends StatefulWidget {
   const UserShortInfo({Key? key, required this.username, required this.avatarLink, required this.onUserProfileRequest,}) : super(key: key);
 

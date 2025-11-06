@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+part of '../../core_ui.dart';
 
 // Custom NavigationItem class to hold label, icon, and optional selected icon.
 class NavigationItem {

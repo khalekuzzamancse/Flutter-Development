@@ -1,6 +1,6 @@
 
+import '../../core/core_language.dart';
 import '../../core/network/network_factory.dart';
-import '../../core/network/to_custom_exception.dart';
 import '../domain/model/break_down_model.dart';
 import '../domain/model/spend_model.dart';
 import '../domain/repository/repository.dart' show Repository;
@@ -34,7 +34,7 @@ final _spendDataJson = '''
     "period": "This month",
     "currency": "\$",
     "spend": {
-        "data": [
+        "source": [
             {
                 "1st_schedule": 400.00,
                 "2nd_schedule": 600.00,

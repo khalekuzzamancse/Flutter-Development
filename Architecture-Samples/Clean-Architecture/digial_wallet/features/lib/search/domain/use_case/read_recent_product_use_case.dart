@@ -3,5 +3,5 @@ import '../repository/repository.dart';
 class ReadRecentProductUseCase{
   final Repository repository;
   ReadRecentProductUseCase(this.repository);
-  Future<List<Product>> execute()=>repository.readRecentProducts();
+  Future<List<ProductModel>> execute()=>repository.readRecentProducts();
 }
