@@ -60,22 +60,52 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('✌️ Hey ${controller.user}!', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
-        actions: [IconButton(icon: Icon(Icons.search), onPressed: () {}),
-          IconButton(
-            icon: Icon(Icons.notifications_none_outlined).modifier(Modifier().paddingAll(8)),
-            onPressed: () {},
-          ),
-        ],
+        title: Text('Welcome ${controller.user}', style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20)),
+        // actions: [IconButton(icon: Icon(Icons.search), onPressed: () {}),
+        //   IconButton(
+        //     icon: Icon(Icons.notifications_none_outlined).modifier(Modifier().paddingAll(8)),
+        //     onPressed: () {},
+        //   ),
+        // ],
       ),
-      body:
-      (ColumnBuilder(
-          arrangement: Arrangement.spaceBy(16),
-          modifier:Modifier().paddingAll(12).verticalScrollable())
-          + _Cards(cards: controller.cards)
-          + _PayBillSection(items: controller.billPayments)
-          + _ActiveLoanSection(loanItems: controller.activeLoanItems)
-      ).build(),
+      body: Column(
+        children: [
+          _PayBillSection(items: controller.billPayments),
+          Expanded(child: _ActiveLoanSection(loanItems: controller.activeLoanItems)),
+          Expanded(child: _RecentTransaction(loanItems: controller.activeLoanItems)),
+
+          // _Cards(cards: controller.cards)
+        ],
+      )
+    );
+  }
+}
+class _RecentTransaction extends StatelessWidget {
+  final List<LoanModel> loanItems;
+  const _RecentTransaction({super.key, required this.loanItems});
+
+  @override
+  Widget build(BuildContext context) {
+
+    return     Column(
+      children: [
+        Row(children: [
+          Text("Recent Transaction", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+          Spacer(),
+          Text("See all ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))]),
+        Expanded(
+          child: ListView(
+              shrinkWrap: true,
+              children:  loanItems.map((item)=>
+                  Padding(
+                    padding: EdgeInsetsGeometry.only(bottom: 8),
+                    child: _LoanItem(data: LoanModel(model: item.model, imageLink:item.imageLink,
+                        price:item.price, date: item.date,
+                        rating: item.rating, ratingMax: item.ratingMax)),
+                  )).toList()
+          ),
+        ),
+      ],
     );
   }
 }
@@ -196,7 +226,7 @@ class _PayBillSection extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  NestedHorizontalScroller(
-        header:  Text("Bill Payments", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        header:  Text("Pay Bill", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         children: items.map((item) =>
             Padding(padding: const EdgeInsets.symmetric(horizontal: 16.0,vertical: 4),
                 child: _PayBillItem(label: item.title, icon: item.icon))).toList());
@@ -240,18 +270,25 @@ class _ActiveLoanSection extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return
-      NestedHorizontalScroller(
-        height: 300,
-        header:  Row(children: [
-          Text("Active Loans", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-          Spacer(),
-          Text("See all ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))]),
-
-        children: loanItems.map((item)=>
-            _LoanItem(data: LoanModel(model: item.model, imageLink:item.imageLink,
-                price:item.price, date: item.date,
-                rating: item.rating, ratingMax: item.ratingMax))).toList(),
-
+      Column(
+        children: [
+          Row(children: [
+            Text("Loans", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Spacer(),
+            Text("See all ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))]),
+          Expanded(
+            child: ListView(
+            shrinkWrap: true,
+            children:  loanItems.map((item)=>
+                Padding(
+                  padding: EdgeInsetsGeometry.only(bottom: 8),
+                  child: _LoanItem(data: LoanModel(model: item.model, imageLink:item.imageLink,
+                      price:item.price, date: item.date,
+                      rating: item.rating, ratingMax: item.ratingMax)),
+                )).toList()
+                ),
+          ),
+        ],
       );
 
 
