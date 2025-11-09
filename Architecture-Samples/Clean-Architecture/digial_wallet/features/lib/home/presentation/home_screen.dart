@@ -1,6 +1,7 @@
 import 'package:features/core/core_ui.dart';
 import 'package:flutter/material.dart';
 
+import '../../transaction/presentation/transaction_list.dart';
 import '../domain/models.dart';
 
 class HomeController {
@@ -68,14 +69,17 @@ class HomeScreen extends StatelessWidget {
         //   ),
         // ],
       ),
-      body: Column(
-        children: [
-          _PayBillSection(items: controller.billPayments),
-          Expanded(child: _ActiveLoanSection(loanItems: controller.activeLoanItems)),
-          Expanded(child: _RecentTransaction(loanItems: controller.activeLoanItems)),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 8.0,left: 16,right: 16),
+        child: Column(
+          children: [
+            _PayBillSection(items: controller.billPayments),
+            Expanded(child: _ActiveLoanSection(loanItems: controller.activeLoanItems)),
+            Expanded(child: _RecentTransaction(loanItems: controller.activeLoanItems)),
 
-          // _Cards(cards: controller.cards)
-        ],
+            // _Cards(cards: controller.cards)
+          ],
+        ),
       )
     );
   }
@@ -94,16 +98,7 @@ class _RecentTransaction extends StatelessWidget {
           Spacer(),
           Text("See all ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400))]),
         Expanded(
-          child: ListView(
-              shrinkWrap: true,
-              children:  loanItems.map((item)=>
-                  Padding(
-                    padding: EdgeInsetsGeometry.only(bottom: 8),
-                    child: _LoanItem(data: LoanModel(model: item.model, imageLink:item.imageLink,
-                        price:item.price, date: item.date,
-                        rating: item.rating, ratingMax: item.ratingMax)),
-                  )).toList()
-          ),
+          child: TransactionScreen(),
         ),
       ],
     );
@@ -121,9 +116,9 @@ class CardInfo {
   CardInfo( {required this.color, required this.cardName, required this.cardNo, required this.dueDate, required this.amount});
 }
 //@formatter:off
-class _Cards extends StatelessWidget {
+class Cards extends StatelessWidget {
   final List<CardInfo> cards;
-  const _Cards({required this.cards});
+  const Cards({required this.cards});
 
   @override
   Widget build(BuildContext context) {

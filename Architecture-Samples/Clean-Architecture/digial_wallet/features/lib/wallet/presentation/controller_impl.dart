@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:features/core/core_presentation_logic.dart';
+import 'package:features/home/presentation/home_screen.dart';
+import 'package:flutter/material.dart';
 import '../../di_container.dart';
 import '../domain/model/break_down_model.dart';
 import '../domain/model/spend_model.dart';
@@ -30,6 +32,22 @@ class ControllerImpl with CoreControllerMixin implements Controller {
       stopLoading();
     }
   }
+
+  @override
+  List<CardInfo> get cards => [
+    CardInfo(
+        cardName: 'VISA',
+        cardNo: '* * * 3854',
+        dueDate: '10 OCT',
+        amount: '\$5001.86',
+        color: Colors.black),
+    CardInfo(
+        cardName: 'VISA',
+        cardNo: '* * * 3854',
+        dueDate: '10 OCT',
+        amount: '\$5001.86',
+        color: Colors.blue),
+  ];
 
 
 }

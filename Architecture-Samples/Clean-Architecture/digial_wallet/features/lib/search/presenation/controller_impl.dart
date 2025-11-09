@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:features/core/core_language.dart';
 import 'package:features/core/core_presentation_logic.dart';
 import 'package:features/search/presenation/time_period_model.dart';
+import 'package:features/wallet/domain/model/spend_model.dart';
 import '../../di_container.dart';
 import '../domain/model/chart_data_model.dart';
 import '../domain/model/product_model.dart';
@@ -15,13 +16,15 @@ class ControllerImpl with CoreControllerMixin implements Controller {
   final _graphData = MutableStateFlow<SpendSummaryModel?>(null);
   final _tabs = MutableStateFlow<TabModel?>();
   final _axisData=MutableStateFlow<AxisData?>(null);
+  final _spendData = MutableStateFlow<SpendModel?>(null);
 
   var _selected='1W';
   SpendSummaryModel? _data=null;
 
   @override
   Stream<SpendSummaryModel?> get graphData => _graphData.asStateFlow();
-
+  @override
+  Stream<SpendModel?> get spendData => _spendData.asStateFlow();
   @override
   Stream<List<ProductModel>> get products => _products.asStateFlow();
 
@@ -48,6 +51,8 @@ class ControllerImpl with CoreControllerMixin implements Controller {
       print("readProducts:$products");
       Logger.on("readProducts", "$products");
       _products.update(products);
+      final spendData = await DiContainer.spendDataUseCase().execute();
+      _spendData.update(spendData);
     } catch (e) {
       print("readProducts:$e");
     } finally {

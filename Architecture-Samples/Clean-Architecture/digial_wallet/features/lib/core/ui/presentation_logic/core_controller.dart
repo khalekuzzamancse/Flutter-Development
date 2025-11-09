@@ -2,6 +2,7 @@ part of '../../core_presentation_logic.dart';
 abstract class CoreController {
   Stream<bool> get isLoading;
   Stream<MessageToUi?> get statusMessage;
+
 }
 // CoreControllerMixin implementing CoreController properties
 mixin CoreControllerMixin implements CoreController {

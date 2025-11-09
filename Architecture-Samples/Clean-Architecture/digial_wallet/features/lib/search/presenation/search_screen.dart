@@ -1,8 +1,11 @@
 import 'package:features/core/core_ui.dart';
 import 'package:features/search/presenation/time_period_model.dart';
+import 'package:features/wallet/domain/model/spend_model.dart';
 import 'package:flutter/material.dart';
+import '../../wallet/presentation/wallet_screen.dart';
 import '../domain/model/product_model.dart';
 import 'axis_data_model.dart';
+import 'controller.dart';
 import 'factory.dart';
 
 //@formatter:off
@@ -20,44 +23,44 @@ class SearchScreen extends StatelessWidget {
    return Scaffold(
         appBar: CustomTopBar(
           title: Text("Search",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16))),
-      body:   Column(
-        children: [
-          StreamBuilderStrategyWithSnackBar<TabModel?>(
-              messageStream: controller.statusMessage,
-              dataStream: controller.tabs,
-              builder: (context, snapshot) {
-                final data = snapshot.data;
-                if (data == null) return EmptyContentScreen();
-                return  CustomTabBar(
-                    timePeriods: data.tabs,
-                    selectedPeriod: data.selected,
-                    onPeriodSelected: (period) {
-                      controller.onSelected(period);
-                    });
-              }),
-          StreamBuilderStrategyWithSnackBar<AxisData?>(
-              messageStream: controller.statusMessage,
-              dataStream: controller.axisData,
-              builder: (context, snapshot) {
-                final data = snapshot.data;
-                if (data == null) return EmptyContentScreen();
-                return  CustomPaint(
-                    size: Size(280, 200),
-                    painter: _LineChartPathPainter(xAxisData: data.xAxisData, yAxisData: data.yAxisData));
-              }),
-          Expanded(
-            flex: 1,
-            child: StreamBuilderStrategyWithSnackBar<List<ProductModel>>(
+      body:   SingleChildScrollView(
+        child: Column(
+
+          children: [
+            StreamBuilderStrategyWithSnackBar<TabModel?>(
+                messageStream: controller.statusMessage,
+                dataStream: controller.tabs,
+                builder: (context, snapshot) {
+                  final data = snapshot.data;
+                  if (data == null) return EmptyContentScreen();
+                  return  CustomTabBar(
+                      timePeriods: data.tabs,
+                      selectedPeriod: data.selected,
+                      onPeriodSelected: (period) {
+                        controller.onSelected(period);
+                      });
+                }),
+            StreamBuilderStrategyWithSnackBar<AxisData?>(
+                messageStream: controller.statusMessage,
+                dataStream: controller.axisData,
+                builder: (context, snapshot) {
+                  final data = snapshot.data;
+                  if (data == null) return EmptyContentScreen();
+                  return  CustomPaint(
+                      size: Size(280, 200),
+                      painter: _LineChartPathPainter(xAxisData: data.xAxisData, yAxisData: data.yAxisData));
+                }),
+            StreamBuilderStrategyWithSnackBar<List<ProductModel>>(
                 messageStream: controller.statusMessage,
                 isLoadingStream: controller.isLoading,
                 dataStream: controller.products,
                 builder: (context, snapshot) {
                   final data = snapshot.data;
                   if (data == null) return EmptyContentScreen();
-                  return _SpendingNRecentProduct(products: data);
-                }),
-          )
-        ],
+                  return _SpendingNRecentProduct(products: data,controller: controller,);
+                })
+          ],
+        ),
       ),
     );
 
@@ -67,7 +70,8 @@ class SearchScreen extends StatelessWidget {
 
 class _SpendingNRecentProduct extends StatelessWidget {
   final List<ProductModel> products;
-  const _SpendingNRecentProduct({super.key, required this.products});
+  final Controller controller;
+  const _SpendingNRecentProduct({super.key, required this.products, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -75,15 +79,23 @@ class _SpendingNRecentProduct extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        SizedBox(height: 16),
+        SizedBox(height: 64),
         _SpendingSummary(
             amountOfSpending: "\$450.00",
             dueDateString: "10 OCT",
             bgColor: Colors.black,
             buttonColor: Colors.blue,
             onPayEarlyPressed: () {}),
-        SizedBox(height: 16),
-        Expanded(child: RecentProduct(products: products))
+        SizedBox(height: 64),
+        StreamBuilderStrategyWithSnackBar<SpendModel?>(
+            messageStream: controller.statusMessage,
+            dataStream: controller.spendData,
+            builder: (context, snapshot) {
+              final data = snapshot.data;
+              if (data == null) return EmptyContentScreen();
+              return  Bars(period:data.period, typeOfCost: 'Spend Chart',
+                  costs:data.spend.data.firstOrNull?.toCost()??[], currencyType:data.currency);
+            })
       ],
     );
   }

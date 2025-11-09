@@ -1,4 +1,5 @@
 import 'package:features/core/core_ui.dart';
+import 'package:features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../domain/model/break_down_model.dart';
 import '../domain/model/spend_model.dart';
@@ -20,22 +21,7 @@ class WalletScreen extends StatelessWidget {
         actions:  [IconButton(icon: Icon(Icons.account_circle), onPressed: () {}).modifier(Modifier().padding(right: 16))],
       ),
       body:(ColumnBuilder(arrangement: Arrangement.spaceBy(8),modifier: Modifier().verticalScrollable())
-          + StreamBuilderStrategyWithSnackBar<SpendModel?>(
-              messageStream: controller.statusMessage,
-              dataStream: controller.spendData,
-              builder: (context, snapshot) {
-                final data = snapshot.data;
-                if (data == null) return EmptyContentScreen();
-                return   _Bars(period:data.period, typeOfCost: 'Spend Chart',
-                    costs:data.spend.data.firstOrNull?.toCost()??[], currencyType:data.currency);
-              })
-          + StreamBuilderStrategyWithSnackBar<List<BreakdownModel>>(
-              messageStream: controller.statusMessage,
-              dataStream: controller.breakdowns,
-              builder: (context, snapshot) {
-                final data = snapshot.data;
-                if (data == null) return EmptyContentScreen();
-                return   _BreakDown(itemData:data);})
+          +Cards(cards: controller.cards,)
           + (ColumnBuilder(modifier:Modifier().linearGradient([Color(0xFFF8F8F8), Color(0xFFFFFFFF)]))
               + Card(color: Colors.white,
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),elevation: 1,
@@ -48,10 +34,10 @@ class WalletScreen extends StatelessWidget {
 }
 
 //@formatter:off
-class _Bars extends StatelessWidget {
+class Bars extends StatelessWidget {
   final String period,typeOfCost, currencyType; final List<double> costs;
 
-  _Bars({required this.period, required this.typeOfCost, required this.costs, this.currencyType = '\$',});
+  Bars({required this.period, required this.typeOfCost, required this.costs, this.currencyType = '\$',});
 
   @override
   Widget build(BuildContext context) {
