@@ -20,24 +20,15 @@ class _ActiveLoanSection extends StatelessWidget {
           ]),
         ),
         SpacerVertical(4),
-        Expanded(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: ListView.builder(
-              itemCount: 2*(loanItems.length)-1,
-                itemBuilder: (context, index){
-                final even=index%2==0;
-                if(even){
-                return _LoanItem(data: loanItems[(index/2).toInt()]);
-                }
-                else{
-                  return Divider(
-                    height: 0,
-                  );
-                }
-                }
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+             children:loanItems.map((e)=>
+                 SizedBox(width:300,child: Padding(
+                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                   child: _LoanItem(data: e),
+                 ))).toList(),
             ),
-          ),
         ),
       ],
     );

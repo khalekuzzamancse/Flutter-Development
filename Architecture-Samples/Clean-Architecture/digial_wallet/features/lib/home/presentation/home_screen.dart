@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
            child: Column(
              children: [
                SpacerVertical(32),
-               Expanded(child: _ActiveLoanSection(loanItems: controller.activeLoanItems)),
+           _ActiveLoanSection(loanItems: controller.activeLoanItems),
                Expanded(child: _RecentTransaction(loanItems: controller.activeLoanItems)),
              ],
            ),
