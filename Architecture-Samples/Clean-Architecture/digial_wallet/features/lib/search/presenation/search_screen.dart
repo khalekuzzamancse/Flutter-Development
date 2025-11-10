@@ -1,3 +1,4 @@
+import 'package:features/_feature_core/ui.dart';
 import 'package:features/core/core_ui.dart';
 import 'package:features/search/presenation/time_period_model.dart';
 import 'package:features/wallet/domain/model/spend_model.dart';
@@ -13,44 +14,56 @@ class SearchScreen extends StatelessWidget {
    final controller=PresentationFactory.createController();
 
    SearchScreen({super.key}){
-     //TODO:Not a good practise to read source to UI element,refactor later
      controller.read();
    }
 
   @override
   Widget build(BuildContext context) {
-
+    const cornerRadius = 24.0;
+    const background= Color(0xFF256C34);
    return Scaffold(
-        appBar: CustomTopBar(
-          title: Text("Search",style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16))),
-      body:   SingleChildScrollView(
-        child: Column(
-
-          children: [
-            StreamBuilderStrategyWithSnackBar<TabModel?>(
-                messageStream: controller.statusMessage,
-                dataStream: controller.tabs,
-                builder: (context, snapshot) {
-                  final data = snapshot.data;
-                  if (data == null) return EmptyContentScreen();
-                  return  CustomTabBar(
-                      timePeriods: data.tabs,
-                      selectedPeriod: data.selected,
-                      onPeriodSelected: (period) {
-                        controller.onSelected(period);
-                      });
-                }),
-            StreamBuilderStrategyWithSnackBar<AxisData?>(
-                messageStream: controller.statusMessage,
-                dataStream: controller.axisData,
-                builder: (context, snapshot) {
-                  final data = snapshot.data;
-                  if (data == null) return EmptyContentScreen();
-                  return  CustomPaint(
-                      size: Size(280, 200),
-                      painter: _LineChartPathPainter(xAxisData: data.xAxisData, yAxisData: data.yAxisData));
-                }),
-            StreamBuilderStrategyWithSnackBar<List<ProductModel>>(
+     backgroundColor: background,
+        appBar: AppBar(
+          backgroundColor: background,
+          title: TextH1(text:"Search")),
+      body:   Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          StreamBuilderStrategyWithSnackBar<TabModel?>(
+              messageStream: controller.statusMessage,
+              dataStream: controller.tabs,
+              builder: (context, snapshot) {
+                final data = snapshot.data;
+                if (data == null) return EmptyContentScreen();
+                return  CustomTabBar(
+                    timePeriods: data.tabs,
+                    selectedPeriod: data.selected,
+                    onPeriodSelected: (period) {
+                      controller.onSelected(period);
+                    });
+              }),
+          SpacerVertical(16),
+          StreamBuilderStrategyWithSnackBar<AxisData?>(
+              messageStream: controller.statusMessage,
+              dataStream: controller.axisData,
+              builder: (context, snapshot) {
+                final data = snapshot.data;
+                if (data == null) return EmptyContentScreen();
+                return  CustomPaint(
+                    size: Size(280, 200),
+                    painter: _LineChartPathPainter(xAxisData: data.xAxisData, yAxisData: data.yAxisData));
+              }),
+          Spacer(),
+          Container(
+            width: double.infinity,
+             decoration:  BoxDecoration(
+                  color:Color(0xFFA5D15B),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(cornerRadius),
+                    topRight: Radius.circular(cornerRadius),
+                  )
+              ),
+            child: StreamBuilderStrategyWithSnackBar<List<ProductModel>>(
                 messageStream: controller.statusMessage,
                 isLoadingStream: controller.isLoading,
                 dataStream: controller.products,
@@ -58,9 +71,9 @@ class SearchScreen extends StatelessWidget {
                   final data = snapshot.data;
                   if (data == null) return EmptyContentScreen();
                   return _SpendingNRecentProduct(products: data,controller: controller,);
-                })
-          ],
-        ),
+                }),
+          )
+        ],
       ),
     );
 
@@ -75,27 +88,47 @@ class _SpendingNRecentProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      //RecentProduct(products: products);
+    const cornerRadius = 24.0;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+    //  crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisSize: MainAxisSize.max,
       children: [
-        SizedBox(height: 64),
-        _SpendingSummary(
-            amountOfSpending: "\$450.00",
-            dueDateString: "10 OCT",
-            bgColor: Colors.black,
-            buttonColor: Colors.blue,
-            onPayEarlyPressed: () {}),
-        SizedBox(height: 64),
+        SizedBox(height: 32),
         StreamBuilderStrategyWithSnackBar<SpendModel?>(
             messageStream: controller.statusMessage,
             dataStream: controller.spendData,
             builder: (context, snapshot) {
               final data = snapshot.data;
               if (data == null) return EmptyContentScreen();
-              return  Bars(period:data.period, typeOfCost: 'Spend Chart',
+              return  Bars(period:data.period, typeOfCost: 'Spend Chart(This month)',
                   costs:data.spend.data.firstOrNull?.toCost()??[], currencyType:data.currency);
-            })
+            }),
+        SizedBox(height: 32),
+        Container(
+          width: double.infinity,
+          decoration: BoxDecoration(
+              color:Colors.white
+              ,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(cornerRadius),
+                topRight: Radius.circular(cornerRadius),
+              )
+          ),
+          child: Column(
+            children: [
+              SpacerVertical(16),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: _SpendingSummary(
+                    amountOfSpending: "\$450.00",
+                    dueDateString: "10 OCT",
+                    bgColor: Colors.white,
+                    buttonColor: Colors.blue,
+                    onPayEarlyPressed: () {}),
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
@@ -114,22 +147,16 @@ class _SpendingSummary extends StatelessWidget {
     final textColor = bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
     final buttonTextColor = buttonColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
 
-    return Container(
-      constraints: BoxConstraints(maxWidth: 400),
-      decoration: BoxDecoration(color: bgColor, borderRadius: BorderRadius.circular(12),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), spreadRadius: 1, blurRadius: 5,offset: Offset(0, 4))]),
-      padding: const EdgeInsets.all(16),
-
-      child:_SpendingLayoutStrategy(
-        labelSpending: Text("Total Spending", style: TextStyle(fontSize: 16, color: textColor)),
-        dueDate: (RowBuilder()
-        + Text("Due Date: ", style: TextStyle(fontSize: 16, color: textColor))
-        + Text(dueDateString, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: textColor))).build(),
-        cost:  Text(amountOfSpending, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
-        action: ElevatedButton(onPressed: onPayEarlyPressed,
-          style: ElevatedButton.styleFrom(backgroundColor: buttonColor,textStyle: TextStyle(color: buttonTextColor)),
-          child: Text("PAY EARLY", style: TextStyle(color: buttonTextColor))),
-      ));
+    return _SpendingLayoutStrategy(
+      labelSpending: Text("Total Spending", style: TextStyle(fontSize: 16, color: textColor)),
+      dueDate: (RowBuilder()
+      + Text("Due Date: ", style: TextStyle(fontSize: 16, color: textColor))
+      + Text(dueDateString, style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: textColor))).build(),
+      cost:  Text(amountOfSpending, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor)),
+      action: ElevatedButton(onPressed: onPayEarlyPressed,
+        style: ElevatedButton.styleFrom(backgroundColor: buttonColor,textStyle: TextStyle(color: buttonTextColor)),
+        child: Text("PAY EARLY", style: TextStyle(color: buttonTextColor))),
+    );
   }
 }
 
@@ -262,9 +289,9 @@ class _LineChartStyle {
     this.pointSize = 4.0,
     this.axisLineWidth = 1.0,
     this.xAxisLabelStyle = const TextStyle(
-        color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
     this.yAxisLabelStyle = const TextStyle(
-        color: Colors.black, fontSize: 10, fontWeight: FontWeight.bold),
+        color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold),
     this.wrapperBoxTopLeftRadius = const Radius.circular(12),
     this.wrapperBoxBottomLeftRadius = const Radius.circular(12),
   });

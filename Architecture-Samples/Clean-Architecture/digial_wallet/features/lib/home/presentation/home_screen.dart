@@ -26,7 +26,7 @@ class HomeScreen extends StatelessWidget {
     const background=Color(0xFFEEC626);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:bg, title: TextH1(text: 'Welcome ${controller.user}'),
+        backgroundColor:bg, title: TextH1(text: 'Welcome, ${controller.user}'),
       ),
       backgroundColor: bg,
       body: Column(
@@ -40,7 +40,8 @@ class HomeScreen extends StatelessWidget {
                borderRadius: BorderRadius.only(
                  topLeft: Radius.circular(cornerRadius),
                  topRight: Radius.circular(cornerRadius),
-               )),
+               )
+             ),
            child: Column(
              children: [
                SpacerVertical(32),

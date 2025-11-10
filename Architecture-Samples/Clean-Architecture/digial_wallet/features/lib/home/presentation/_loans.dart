@@ -13,21 +13,37 @@ class _ActiveLoanSection extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Row(children: [
-            TextH2(text: "Loans",color: Colors.black,),
+            TextH2(text: "Loans", color: Colors.black,),
             Spacer(),
             Text("See all ",
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400,color: Colors.black))
+                style: TextStyle(fontSize: 16,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.black))
           ]),
         ),
         SpacerVertical(4),
         SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-             children:loanItems.map((e)=>
-                 SizedBox(width:300,child: Padding(
-                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                   child: _LoanItem(data: e),
-                 ))).toList(),
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: loanItems
+                  .asMap()
+                  .entries
+                  .map((entry) {
+                int index = entry.key; // Index of the current item
+                var e = entry.value; // The current item
+
+                return SizedBox(
+                  width: 330,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: 16.0,
+                      right: 16.0,
+                    ),
+                    child: _LoanItem(
+                        data: e), // Your custom widget for each loan item
+                  ),
+                );
+              }).toList(),
             ),
         ),
       ],

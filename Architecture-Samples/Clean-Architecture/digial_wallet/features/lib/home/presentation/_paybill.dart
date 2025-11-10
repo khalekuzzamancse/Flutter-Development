@@ -28,9 +28,10 @@ class _PayBillItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = Color(0xFFF2F4F7); final shadowColor=Colors.black.withOpacity(0.1);
-    final iconColor = bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
-
+    final bgColor = Color(0xFFEEC626);
+    final shadowColor=Colors.black.withOpacity(0.1);
+    final iconColor =Color(0xFF2F7167);
+    bgColor.computeLuminance() > 0.5 ? Colors.black : Colors.white;
     return  (ColumnBuilder(arrangement: Arrangement.spaceBy(8))
         + Icon(icon, color: iconColor)
             .modifier(Modifier()

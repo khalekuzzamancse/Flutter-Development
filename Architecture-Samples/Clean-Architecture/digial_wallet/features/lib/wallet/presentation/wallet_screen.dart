@@ -1,8 +1,8 @@
+import 'package:features/_feature_core/ui.dart';
 import 'package:features/core/core_ui.dart';
 import 'package:features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../domain/model/break_down_model.dart';
-import '../domain/model/spend_model.dart';
 import 'factory.dart';
 
 //@formatter:off
@@ -42,19 +42,27 @@ class Bars extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final maxCost = costs.reduce((a, b) => a > b ? a : b);
+return Column(
+  mainAxisSize: MainAxisSize.max,
+  children: [
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      child: Align(alignment:Alignment.topLeft,child: TextH2(text: '$typeOfCost')),
+    ),
+    Align(
+     alignment: Alignment.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children:   costs.map((cost) {
+          return _Bar(cost: cost, maxCost: maxCost, barColor: const Color(0xFF7F00FF),
+              currencySymbol: currencyType)
+              .modifier(Modifier().padding(left:4,right: 4));}).toList(),
+      ),
+    )
 
-    return  NestedHorizontalScroller(
-        header: (ColumnBuilder()
-            + Text('$period',
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(fontSize: 14,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6)))
-            + Text('$typeOfCost',
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 18, fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.onSurface.withOpacity(0.9)),))
-            .build(),
-        childVerticalAlignment: CrossAxisAlignment.end,
-        children:  costs.map((cost) {
-          return _Bar(cost: cost, maxCost: maxCost, barColor: const Color(0xFF7F00FF), currencySymbol: currencyType)
-              .modifier(Modifier().padding(left:4,right: 4));}).toList());
-
+    ]
+);
   }
 }
 

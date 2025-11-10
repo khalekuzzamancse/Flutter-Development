@@ -39,7 +39,7 @@ class TextH1 extends StatelessWidget {
   Widget build(BuildContext context) {
     final textColor = ThemeData.estimateBrightnessForColor(background??Colors.transparent)
         == Brightness.dark ? Colors.white : Colors.black;
-    return Text(text, style:TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: color??textColor));
+    return Text(text, style:TextStyle(fontSize: 22, fontWeight: FontWeight.w500, color: color??textColor));
   }
 }
 //@formatter:off
