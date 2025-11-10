@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'home/presentation/home_screen.dart';
 import 'navigation/navigation.dart';
 class EntryPoint extends StatelessWidget {
   const EntryPoint({super.key});
 
   @override
   Widget build(BuildContext context) {
-   return SafeArea(child: RootNavigation());
+   // return RootNavigation();
+   return MaterialApp(home: HomeScreen(),debugShowCheckedModeBanner: false);
   }
 }
 

@@ -5,9 +5,23 @@ class CardModel {
 }
 //@formatter:off
 class LoanModel {
-  final String model, imageLink,price,date;
-  final int rating,ratingMax;
-
-  const LoanModel({required this.model, required this.imageLink, required this.price,
-    required this.date, required this.rating, required this.ratingMax});
+  final String name, imageLink,price,date;
+ final LoanStatus status;
+  const LoanModel({required this.name, required this.imageLink, required this.price,
+    required this.date,required this.status});
+}
+enum LoanStatus {
+  pending, due, approved,none;
+  String get label {
+    switch (this) {
+      case LoanStatus.pending:
+        return 'Pending';
+      case LoanStatus.due:
+        return 'Due';
+      case LoanStatus.approved:
+        return 'Approved';
+      default:
+        return 'N/A';
+    }
+  }
 }

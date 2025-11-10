@@ -895,9 +895,9 @@ class VerticalSpace extends StatelessWidget {
     return SizedBox(height: height);
   }
 }
-class VSpacer extends StatelessWidget {
+class SpacerVertical extends StatelessWidget {
   final double height;
-  const VSpacer( this.height);
+  const SpacerVertical( this.height);
   @override
   Widget build(BuildContext context)=>SizedBox(height: height);
 }

@@ -231,7 +231,7 @@ class _ProductLayoutStrategy extends StatelessWidget {
         +image.modifier(Modifier().align(Alignment.centerLeft))
         +(ColumnBuilder(horizontalAlignment: CrossAxisAlignment.start)
             +title
-            +VSpacer(8)
+            +SpacerVertical(8)
             +rating
         ).build().modifier(Modifier().weight(1))
         +price

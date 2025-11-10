@@ -208,7 +208,7 @@ class _LayoutStrategy extends StatelessWidget {
         + (RowBuilder()+labelAccount.modifier(Modifier().weight(1))+fieldAccountNo).build()
         + (RowBuilder()+labelPassword.modifier(Modifier().weight(1))+fieldPassword).build()
         + _CardInfoLayoutStrategy(expireDate: expireDate,ccv: ccv,deleteButton: deleteButton)
-        +VSpacer(8)
+        +SpacerVertical(8)
         + skipButton.modifier(Modifier().fillMaxWidth()))
         .build().modifier(modifier??Modifier());
 
@@ -224,7 +224,7 @@ class _CardInfoLayoutStrategy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) =>(RowBuilder()
-      + (ColumnBuilder(horizontalAlignment: CrossAxisAlignment.start)+expireDate+VSpacer(4)+ccv).build().modifier(Modifier().weight(1))
+      + (ColumnBuilder(horizontalAlignment: CrossAxisAlignment.start)+expireDate+SpacerVertical(4)+ccv).build().modifier(Modifier().weight(1))
       + deleteButton.modifier(Modifier().align(Alignment.centerRight))).build();
 }
 

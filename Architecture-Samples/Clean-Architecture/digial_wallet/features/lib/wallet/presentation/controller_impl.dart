@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:features/core/core_presentation_logic.dart';
+import 'package:features/home/presentation/home_controller.dart';
 import 'package:features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import '../../di_container.dart';

@@ -10,12 +10,10 @@ class HomeRepositoryImpl implements HomeRepository {
     final entity = await _accountApi.readActiveLoansOrThrow();
     return entity
         .map((e) => LoanModel(
-            model: e.model,
+            name: e.model,
             imageLink: e.imageLink,
             price: e.price,
-            date: e.date,
-            rating: e.rating,
-            ratingMax: e.ratingMax))
+            date: e.date, status:LoanStatus.none))
         .toList();
   }
 
