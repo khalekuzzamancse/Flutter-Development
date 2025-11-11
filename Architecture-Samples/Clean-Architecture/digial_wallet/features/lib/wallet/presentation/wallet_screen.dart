@@ -2,7 +2,6 @@ import 'package:features/_feature_core/ui.dart';
 import 'package:features/core/core_ui.dart';
 import 'package:features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
-import '../domain/model/break_down_model.dart';
 import 'factory.dart';
 
 //@formatter:off
@@ -14,21 +13,43 @@ class WalletScreen extends StatelessWidget {
   }
   @override
   Widget build(BuildContext context) {
+    const cornerRadius = 24.0;
+    const background= Color(0xFF256C34);
     return Scaffold(
-      appBar: CustomTopBar(
-        leading:IconButton(icon: Icon(Icons.arrow_back), onPressed: () {}) ,
-        title: Text('Wallet',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16)),
-        actions:  [IconButton(icon: Icon(Icons.account_circle), onPressed: () {}).modifier(Modifier().padding(right: 16))],
+      appBar: AppBar(
+        title: TextH1(text:'Wallet'),
+        backgroundColor: background,
       ),
-      body:(ColumnBuilder(arrangement: Arrangement.spaceBy(8),modifier: Modifier().verticalScrollable())
-          +Cards(cards: controller.cards,)
-          + (ColumnBuilder(modifier:Modifier().linearGradient([Color(0xFFF8F8F8), Color(0xFFFFFFFF)]))
-              + Card(color: Colors.white,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(64)),elevation: 1,
-                  child: _AccountInfo(expiryDate: "12/24", ccv: "123",
-                    onDeletePressed: () {}, onSkipPressed: () {}, onAccountNumberChanged: (value) {}, onPasswordChanged: (value) {},
-                  ).modifier(Modifier().paddingAll(32)))).build())
-          .build(),
+      backgroundColor: background,
+      body:Column(
+        children: [
+        _AccountInfo(
+          expiryDate: "12/24", ccv: "123",
+          onDeletePressed: () {},
+            onSkipPressed: () {},
+           onAccountNumberChanged: (value) {},
+            onPasswordChanged: (value) {}),
+          SpacerVertical(32),
+          Expanded(
+              child: Container(
+               decoration:   BoxDecoration(
+                      color:Color(0xFFA5D15B),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(cornerRadius),
+                        topRight: Radius.circular(cornerRadius),
+                      )
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      SpacerVertical(32),
+                      Expanded(child: Cards(cards: controller.cards)),
+                    ],
+                  )
+              )
+          )
+        ],
+      )
     );
   }
 }
@@ -47,7 +68,8 @@ class _AccountInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const labelTextStyle = TextStyle(fontSize: 14, fontWeight: FontWeight.w500);
+    const labelTextStyle = TextStyle(
+        color: Colors.white, fontSize: 14, fontWeight: FontWeight.w500);
 
     return _LayoutStrategy(
         modifier: Modifier().widthIn(maxWidth: 400),
@@ -69,14 +91,11 @@ class _AccountInfo extends StatelessWidget {
             textStyle: labelTextStyle,
             onChanged: onPasswordChanged),
 
-        deleteButton: ElevatedButtonBuilder(
-            label: Text('Delete Card', style: TextStyle(color: Colors.white, fontSize: 14))
-                .modifier(Modifier().padding(left: 8,right: 8)),
-            cornerRadius: 8, background: Color(0xFF7F00FF)).build(),
-
 
         skipButton: ElevatedButtonBuilder(
-            label: Text('Skip'.toUpperCase(), style: TextStyle(color: Colors.white, fontSize: 16)).modifier(Modifier().padding(top: 12,bottom: 12)),
+            label: Text('Add',
+                style: TextStyle(color: Colors.white, fontSize: 16))
+                .modifier(Modifier().padding(top: 12,bottom: 12)),
             cornerRadius: 4, background: Color(0xFF5070FA)).build()
     );
   }
@@ -85,19 +104,19 @@ class _AccountInfo extends StatelessWidget {
 
 //@formatter:off
 class _LayoutStrategy extends StatelessWidget {
-  final Widget labelAccount,labelPassword,expireDate,ccv,fieldAccountNo,fieldPassword,deleteButton,skipButton;
+  final Widget labelAccount,labelPassword,expireDate,ccv,fieldAccountNo,fieldPassword,skipButton;
   final Modifier? modifier;
 
   const _LayoutStrategy({super.key, required this.labelAccount, required this.labelPassword, required this.expireDate,
     required this.ccv, required this.fieldAccountNo, required this.fieldPassword,
-    required this.deleteButton, required this.skipButton, this.modifier});
+    required this.skipButton, this.modifier});
 
   @override
   Widget build(BuildContext context) {
     return (ColumnBuilder(arrangement: Arrangement.spaceBy(8))
         + (RowBuilder()+labelAccount.modifier(Modifier().weight(1))+fieldAccountNo).build()
         + (RowBuilder()+labelPassword.modifier(Modifier().weight(1))+fieldPassword).build()
-        + _CardInfoLayoutStrategy(expireDate: expireDate,ccv: ccv,deleteButton: deleteButton)
+        + _CardInfoLayoutStrategy(expireDate: expireDate,ccv: ccv)
         +SpacerVertical(8)
         + skipButton.modifier(Modifier().fillMaxWidth()))
         .build().modifier(modifier??Modifier());
@@ -107,14 +126,14 @@ class _LayoutStrategy extends StatelessWidget {
 }
 //@formatter:off
 class _CardInfoLayoutStrategy extends StatelessWidget {
-  final Widget expireDate,ccv,deleteButton;
+  final Widget expireDate,ccv;
 
-  const _CardInfoLayoutStrategy({super.key, required this.expireDate, required this.ccv, required this.deleteButton});
+  const _CardInfoLayoutStrategy({super.key, required this.expireDate, required this.ccv,});
 
 
   @override
   Widget build(BuildContext context) =>(RowBuilder()
       + (ColumnBuilder(horizontalAlignment: CrossAxisAlignment.start)+expireDate+SpacerVertical(4)+ccv).build().modifier(Modifier().weight(1))
-      + deleteButton.modifier(Modifier().align(Alignment.centerRight))).build();
+    ).build();
 }
 

@@ -68,14 +68,15 @@ class Cards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        NestedHorizontalScroller(
-            showIndicator: true,
-            children:cards.map((item) =>
-                Padding(padding: const EdgeInsets.all(8.0), child: _Card(cardInfo: item))).toList()),
-      ],
+
+    return ListView.builder(
+      itemCount: cards.length,
+        itemBuilder: (context,index){
+          return Padding(padding: const EdgeInsets.all(8.0),
+              child: _Card(cardInfo: cards[index]));
+        }
     );
+
   }
 }
 
@@ -107,20 +108,8 @@ class _Card extends StatelessWidget {
             + Text('Due date', style: labelSmall.copyWith(fontWeight: FontWeight.w300))
             + Text(cardInfo.dueDate, style: labelSmall))
             .build(),
-
-        labelEarly: Text('EARLY', style: labelSmall),
         amount: Text(cardInfo.amount, style: labelMedium.copyWith(fontSize: 20)),
-
-        action: ElevatedButton(
-          onPressed: () {},
-          style: ElevatedButton.styleFrom(
-            backgroundColor: buttonColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          ),
-          child: Text("PAY", style: TextStyle(color: buttonTextColor)),
-        ))
+    )
     ;
 
   }
@@ -128,17 +117,17 @@ class _Card extends StatelessWidget {
 
 
 class _CardLayoutStrategy extends StatelessWidget {
-  final Widget cardName,dueDate,amount,action,cardNo,labelEarly;
+  final Widget cardName,dueDate,amount,cardNo;
   final Modifier? modifier;
   const _CardLayoutStrategy({ required this.dueDate,
-    required this.action, required this.cardName, required this.amount, required this.cardNo, required this.labelEarly, this.modifier});
+     required this.cardName, required this.amount, required this.cardNo, this.modifier});
   @override
   Widget build(BuildContext context) {
     return   (ColumnBuilder(arrangement: Arrangement.spaceBy(8))
         + (RowBuilder()+cardName.modifier(Modifier().weight(1))+cardNo).build()
         + SpacerVertical(24)
-        + (RowBuilder()+dueDate.modifier(Modifier().align(Alignment.centerLeft).weight(1))+labelEarly).build()
-        + (RowBuilder()+amount.modifier(Modifier().weight(1))+action).build())
+        + (RowBuilder()+dueDate.modifier(Modifier().align(Alignment.centerLeft).weight(1))).build()
+        + (RowBuilder()+amount.modifier(Modifier().weight(1))).build())
         .build()
         .modifier(modifier??Modifier());
 
