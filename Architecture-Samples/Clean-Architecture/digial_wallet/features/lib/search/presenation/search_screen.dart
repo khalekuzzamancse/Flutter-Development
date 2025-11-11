@@ -493,3 +493,59 @@ class _LineChartPathPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }
 
+//@formatter:off
+class Bars extends StatelessWidget {
+  final String period,typeOfCost, currencyType; final List<double> costs;
+
+  Bars({required this.period, required this.typeOfCost, required this.costs, this.currencyType = '\$',});
+
+  @override
+  Widget build(BuildContext context) {
+    final maxCost = costs.reduce((a, b) => a > b ? a : b);
+    return Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Align(alignment:Alignment.topLeft,child: TextH2(text: '$typeOfCost')),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children:   costs.map((cost) {
+                return _Bar(cost: cost, maxCost: maxCost, barColor: const Color(0xFF7F00FF),
+                    currencySymbol: currencyType)
+                    .modifier(Modifier().padding(left:4,right: 4));}).toList(),
+            ),
+          )
+
+        ]
+    );
+  }
+}
+
+//@formatter:off
+class _Bar extends StatelessWidget {
+  final double cost, maxCost;final Color barColor;final String currencySymbol;
+
+
+  _Bar({required this.cost, required this.maxCost, this.barColor = const Color(0xFF7F00FF), this.currencySymbol = '\$'});
+
+  @override
+  Widget build(BuildContext context) {
+    // Scale the height based on maxCost to fit within a fixed height (e.g., 200 pixels)
+    final double barHeight = (150 * cost) / maxCost;
+
+    return (ColumnBuilder(arrangement: Arrangement.spaceBy(8),modifier: Modifier().wrapContentWidth())
+        + SizedBox(height: barHeight,width: double.infinity)//fillMaxWidth
+            .modifier(Modifier()
+            .shadow(backgroundColor: barColor,
+            borderRadius: BorderRadius.only(topLeft: Radius.circular(8.0),topRight: Radius.circular(8.0))))
+        +  Text('$currencySymbol${cost.toStringAsFixed(2)}', style: TextStyle(fontSize: 12), textAlign: TextAlign.start)
+            .modifier(Modifier().padding(right: 8)))//Increase the bar trailing width
+        .build();
+
+  }
+}
