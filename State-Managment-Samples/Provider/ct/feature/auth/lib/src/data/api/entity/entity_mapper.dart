@@ -1,7 +1,5 @@
-
-import 'package:auth/src/domain/domain.dart';
-import 'package:auth/src/domain/user_model.dart';
-
+import '../../../domain/domain.dart';
+import '../../../domain/user_model.dart';
 import 'login_response_entity.dart';
 import 'register_request_entity.dart';
 import 'user_entity.dart';

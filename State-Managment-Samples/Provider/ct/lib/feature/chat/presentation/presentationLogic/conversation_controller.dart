@@ -13,7 +13,7 @@ import '../../domain/model/message_model.dart';
 //@formatter:off
 class ConversationController extends GetxController implements WebSocketObserver {
   var isLoading = false.obs;
-  var conversations = <ConversationModel>[].obs;
+  var conversations = dummyConversations.obs;
   final _class = 'ConversationController';
   String? _next;
   ///Use for local search
@@ -265,214 +265,96 @@ class ConversationController extends GetxController implements WebSocketObserver
 
 }
 
-// List<ConversationModelHome> generateChatList() {
-//   final List<ConversationModelHome> chatList = [
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Robert Alexa',
-//       lastMessage: 'How are you?',
-//       time: '9:14 PM',
-//       isSeen: true,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: '+546964802',
-//       lastMessage: 'Ok. I will try my best',
-//       time: '6:14 PM',
-//       isSeen: false,
-//       isSent: false,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Istiak Ahmed',
-//       lastMessage: 'I will give you the number',
-//       time: '3:12 PM',
-//       isSeen: true,
-//       isSent: false,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Flora Smith',
-//       lastMessage: 'Photo',
-//       time: '2:14 PM',
-//       isSeen: true,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: '+880 168191044',
-//       lastMessage: 'Just try to improve you',
-//       time: '10:12 AM',
-//       isSeen: false,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Arian Friend',
-//       lastMessage: 'Why?',
-//       time: '10:12 AM',
-//       isSeen: true,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Home',
-//       lastMessage: 'Typing...',
-//       time: '9:12 AM',
-//       isSeen: false,
-//       isSent: false,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: '+546964807',
-//       lastMessage: 'Here I am giving you',
-//       time: '9:26 AM',
-//       isSeen: false,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Mostofa Ahad',
-//       lastMessage: 'No, I can',
-//       time: '8:12 AM',
-//       isSeen: true,
-//       isSent: false,
-//     ),
-//   ];
-//
-//   return chatList;
-// }
-// final List<MessageModel> _conversations = [
-//   MessageModel(
-//     message: 'Hi, How are you?',
-//     time: '7:03 PM',
-//     isAmSender: false,
-//     isSeen: true,
-//     senderName: 'Alex Robert',
-//   ),
-//   MessageModel(
-//     message: 'Hi, I am fine.',
-//     time: '7:04 PM',
-//     isAmSender: true,
-//     isSeen: true,
-//     senderName: 'Alex Robert',
-//   ),
-//   MessageModel(
-//     message: 'What are you doing?',
-//     time: '7:05 PM',
-//     isAmSender: false,
-//     isSeen: true,
-//     senderName: 'Alex Robert',
-//   ),
-//   MessageModel(
-//     message: 'I am free now.',
-//     time: '7:06 PM',
-//     isAmSender: true,
-//     isSeen: true,
-//     senderName: 'Alex Robert',
-//   ),
-//   MessageModel(
-//     message:
-//         'I need a website of my business. I want to develop my business through a website.',
-//     time: '7:08 PM',
-//     isAmSender: false,
-//     isSeen: true,
-//     senderName: 'Alex Robert',
-//   ),
-// ];
-// List<ConversationModelHome> generateChatList() {
-//   final List<ConversationModelHome> chatList = [
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Robert Alexa',
-//       lastMessage: 'How are you?',
-//       time: '9:14 PM',
-//       isSeen: true,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: '+546964802',
-//       lastMessage: 'Ok. I will try my best',
-//       time: '6:14 PM',
-//       isSeen: false,
-//       isSent: false,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Istiak Ahmed',
-//       lastMessage: 'I will give you the number',
-//       time: '3:12 PM',
-//       isSeen: true,
-//       isSent: false,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Flora Smith',
-//       lastMessage: 'Photo',
-//       time: '2:14 PM',
-//       isSeen: true,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: '+880 168191044',
-//       lastMessage: 'Just try to improve you',
-//       time: '10:12 AM',
-//       isSeen: false,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Arian Friend',
-//       lastMessage: 'Why?',
-//       time: '10:12 AM',
-//       isSeen: true,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Home',
-//       lastMessage: 'Typing...',
-//       time: '9:12 AM',
-//       isSeen: false,
-//       isSent: false,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: '+546964807',
-//       lastMessage: 'Here I am giving you',
-//       time: '9:26 AM',
-//       isSeen: false,
-//       isSent: true,
-//     ),
-//     ConversationModelHome(
-//       avatarUrl:
-//       'https://avatars.githubusercontent.com/u/74848657?s=400&u=824db39937141324ea4ee2ea87d5f4d86dbe7828&v=4',
-//       name: 'Mostofa Ahad',
-//       lastMessage: 'No, I can',
-//       time: '8:12 AM',
-//       isSeen: true,
-//       isSent: false,
-//     ),
-//   ];
-//
-//   return chatList;
+
+List<ConversationModel> dummyConversations = [
+  ConversationModel(
+    id: 1,
+    peer: ConversationPeerEntity(
+      id: 101,
+      name: 'John Doe',
+      image: 'https://example.com/avatar1.jpg',
+      lastSeen: '2 hours ago',
+      isOnline: true,
+    ),
+    isGroupChat: false,
+    lastMessage: LastMessageModel(
+      id: 201,
+      status: 1, // Assuming 1 is the sent status
+      messageOrFileLabel: 'Hey, how are you?',
+      time: '10:30 AM',
+      iAmSender: true,
+    ),
+  ),
+  ConversationModel(
+    id: 2,
+    peer: ConversationPeerEntity(
+      id: 102,
+      name: 'Jane Smith',
+      image: 'https://example.com/avatar2.jpg',
+      lastSeen: 'Yesterday at 5:00 PM',
+      isOnline: false,
+    ),
+    isGroupChat: false,
+    lastMessage: LastMessageModel(
+      id: 202,
+      status: 2, // Assuming 2 is the delivered status
+      messageOrFileLabel: 'Let\'s meet at 6 PM.',
+      time: '4:00 PM',
+      iAmSender: false,
+    ),
+  ),
+  ConversationModel(
+    id: 3,
+    peer: ConversationPeerEntity(
+      id: 103,
+      name: 'Family Group',
+      image: 'https://example.com/group-avatar.jpg',
+      lastSeen: 'Just now',
+      isOnline: true,
+    ),
+    isGroupChat: true,
+    lastMessage: LastMessageModel(
+      id: 203,
+      status: 1, // Sent
+      messageOrFileLabel: 'Don\'t forget dinner at 7 PM!',
+      time: 'Just now',
+      iAmSender: true,
+    ),
+  ),
+  ConversationModel(
+    id: 4,
+    peer: ConversationPeerEntity(
+      id: 104,
+      name: 'Work Chat',
+      image: 'https://example.com/work-avatar.jpg',
+      lastSeen: 'Last seen 2 days ago',
+      isOnline: false,
+    ),
+    isGroupChat: true,
+    lastMessage: LastMessageModel(
+      id: 204,
+      status: 2, // Delivered
+      messageOrFileLabel: 'Meeting at 10 AM tomorrow',
+      time: '3 days ago',
+      iAmSender: false,
+    ),
+  ),
+  ConversationModel(
+    id: 5,
+    peer: ConversationPeerEntity(
+      id: 105,
+      name: 'School Friends',
+      image: 'https://example.com/school-avatar.jpg',
+      lastSeen: '1 hour ago',
+      isOnline: true,
+    ),
+    isGroupChat: true,
+    lastMessage: LastMessageModel(
+      id: 205,
+      status: 1, // Sent
+      messageOrFileLabel: 'Can anyone bring the notes?',
+      time: '1 hour ago',
+      iAmSender: true,
+    ),
+  ),
+];

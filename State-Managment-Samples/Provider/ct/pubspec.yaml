@@ -34,7 +34,7 @@ dependencies:
   photo_view: ^0.15.0
   open_filex: ^4.6.0
   auth:
-    path: feature/auth
+    path: feature
   receive_sharing_intent:
     git:
       url: https://github.com/KasemJaffer/receive_sharing_intent

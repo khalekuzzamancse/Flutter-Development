@@ -1,7 +1,8 @@
-import 'package:auth/src/domain/domain.dart';
+
 import 'package:core/ui/_render_img.dart';
 import 'package:core/ui/core_ui.dart';
 import 'package:flutter/material.dart';
+import '../../domain/domain.dart';
 import '../_core/text_fields.dart';
 import '../logic/di_container.dart';
 import '../_core/resource_factory.dart';

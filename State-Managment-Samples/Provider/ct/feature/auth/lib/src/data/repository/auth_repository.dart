@@ -1,17 +1,16 @@
 
 
 import 'dart:convert';
-
-import 'package:auth/src/data/api/entity/code_verify_entitity.dart';
-import 'package:auth/src/data/api/entity/entity_mapper.dart';
-import 'package:auth/src/data/api/entity/login_response_entity.dart';
-import 'package:auth/src/data/api/entity/register_response_entities.dart';
-import 'package:auth/src/data/api/entity/server_generic_response.dart';
-import 'package:auth/src/domain/domain.dart';
-import 'package:auth/src/domain/user_model.dart';
 import 'package:core/language/core_language.dart';
 import 'package:core/network/core_network.dart';
 
+import '../../domain/domain.dart';
+import '../../domain/user_model.dart';
+import '../api/entity/code_verify_entitity.dart';
+import '../api/entity/entity_mapper.dart';
+import '../api/entity/login_response_entity.dart';
+import '../api/entity/register_response_entities.dart';
+import '../api/entity/server_generic_response.dart';
 import 'apis.dart';
 
 class AuthRepository {

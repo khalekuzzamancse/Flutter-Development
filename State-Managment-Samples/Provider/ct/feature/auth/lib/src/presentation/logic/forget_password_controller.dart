@@ -1,6 +1,7 @@
 
-import 'package:auth/src/data/repository/auth_repository.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
+import '../../data/repository/auth_repository.dart' show AuthRepository;
 
 
 class ForgetPasswordController {

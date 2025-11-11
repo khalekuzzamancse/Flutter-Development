@@ -1,6 +1,6 @@
-import 'package:auth/src/data/api/api.dart';
 import 'package:core/language/core_language.dart';
 import '../../domain/domain.dart';
+import '../api/api.dart';
 import '../api/api_factory.dart';
 
 class AuthRepositoryImpl implements AuthRepository{

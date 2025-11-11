@@ -1,4 +1,4 @@
-import 'package:auth/src/data/remote_source/remote_data_source.dart';
+import '../remote_source/remote_data_source.dart';
 import 'api.dart';
 ///The abstract factory
 abstract class ApiFactory {

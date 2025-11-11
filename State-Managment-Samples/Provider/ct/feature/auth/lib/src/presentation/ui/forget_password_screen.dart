@@ -1,5 +1,4 @@
 //@formatter:off
-import 'package:auth/src/presentation/ui/set_new_passwrod_screen.dart';
 import 'package:core/ui/core_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import '../logic/forget_password_controller.dart';
 import '../_core/button.dart';
 import '../_core/misc.dart';
 import '../_core/screens.dart';
+import 'set_new_passwrod_screen.dart';
 
 
 class ForgetPasswordScreen extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:snowchat_ios/core/ui/spacer.dart';
@@ -23,7 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final controller =LoginController();
   @override
   Widget build(BuildContext context) {
-return AuthModule(onLoginSuccess: (_){});
+// return AuthModule(onLoginSuccess: (_){});
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(

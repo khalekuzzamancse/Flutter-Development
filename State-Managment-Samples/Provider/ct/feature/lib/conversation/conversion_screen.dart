@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
-import '../../../../core/misc/time_formatter.dart';
-import '../../../../core/ui/app_color.dart';
-import '../../../../core/ui/message_status_icon.dart';
-import '../../../../core/ui/misc.dart';
-import '../../domain/model/conversation_model.dart';
-import '../../domain/model/last_message_model.dart';
+import '../_core/time_formatter.dart';
+import '../_core/ui.dart';
+import 'model.dart';
+
+class ConversionScreen extends StatelessWidget {
+  const ConversionScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ConversationList(
+        maxWidth: 500,
+        conversations: dummyConversations,
+        onChatClicked: (ConversationModel ) {  },
+        onDeleteRequest: (ConversationModel ) {  },
+        onEnd: () {  },
+      
+      ),
+    );
+  }
+}
 
 //@formatter:off
 class ConversationList extends StatefulWidget {
@@ -85,6 +100,8 @@ class _ConversationListState extends State<ConversationList> {
   }
 }
 
+
+
 class ConfirmationDialog extends StatelessWidget {
   final VoidCallback onConfirm;
 
@@ -127,29 +144,29 @@ class _ConversationItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: _ChatLayoutStrategy(
-        avatar: AvatarWithStatus(
-          avatarUrl: model.peer.image??'',
-          onOnline: model.peer.isOnline??false,
-        ),
-        name: Text(
-            parseWithEmojiOrOriginal(model.peer.name) ,//may contain emoji,
-          style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 18.0,
-              color: AppColor.headingText),
-        ),
-        lastMessage: lastMessage == null ? const _LastMsg(msg: 'Say something',
-            color:   Colors.black):
-            _LastMsg(msg: lastMessage.messageOrFileLabel, color:  _shouldHighlight(lastMessage) ? Colors.black : Colors.grey)
-        ,
-        status: lastMessage == null ? null:_LastMsgStatusIcon(lastMessage:lastMessage),
-        time: lastMessage==null?null: Text(
-          TimeFormatter.formatReadableTimestamp(lastMessage.time),
-          style: TextStyle(
-            color: Colors.grey[600],
-            fontSize: 12.0,
+          avatar: AvatarWithStatus(
+            avatarUrl: model.peer.image??'',
+            onOnline: model.peer.isOnline??false,
           ),
-        )
+          name: Text(
+            parseWithEmojiOrOriginal(model.peer.name) ,//may contain emoji,
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18.0,
+                color: Colors.green),
+          ),
+          lastMessage: lastMessage == null ? const _LastMsg(msg: 'Say something',
+              color:   Colors.black):
+          _LastMsg(msg: lastMessage.messageOrFileLabel, color:  _shouldHighlight(lastMessage) ? Colors.black : Colors.grey)
+          ,
+          status: lastMessage == null ? null:_LastMsgStatusIcon(lastMessage:lastMessage),
+          time: lastMessage==null?null: Text(
+            TimeFormatter.formatReadableTimestamp(lastMessage.time),
+            style: TextStyle(
+              color: Colors.grey[600],
+              fontSize: 12.0,
+            ),
+          )
       ),
     );
   }
@@ -176,8 +193,8 @@ class _LastMsg extends StatelessWidget {
 
 bool _shouldHighlight(LastMessageModel message){
   if(message.iAmSender??true)//if not decided then assuming I am sender
-    {
-      return false;
+      {
+    return false;
   }
   if(message.status==2){
     return false;
@@ -253,3 +270,96 @@ class _ChatLayoutStrategy extends StatelessWidget {
     );
   }
 }
+
+List<ConversationModel> dummyConversations = [
+  ConversationModel(
+    id: 1,
+    peer: ConversationPeerEntity(
+      id: 101,
+      name: 'John Doe',
+      image: 'https://example.com/avatar1.jpg',
+      lastSeen: '2 hours ago',
+      isOnline: true,
+    ),
+    isGroupChat: false,
+    lastMessage: LastMessageModel(
+      id: 201,
+      status: 1, // Assuming 1 is the sent status
+      messageOrFileLabel: 'Hey, how are you?',
+      time: '10:30 AM',
+      iAmSender: true,
+    ),
+  ),
+  ConversationModel(
+    id: 2,
+    peer: ConversationPeerEntity(
+      id: 102,
+      name: 'Jane Smith',
+      image: 'https://example.com/avatar2.jpg',
+      lastSeen: 'Yesterday at 5:00 PM',
+      isOnline: false,
+    ),
+    isGroupChat: false,
+    lastMessage: LastMessageModel(
+      id: 202,
+      status: 2, // Assuming 2 is the delivered status
+      messageOrFileLabel: 'Let\'s meet at 6 PM.',
+      time: '4:00 PM',
+      iAmSender: false,
+    ),
+  ),
+  ConversationModel(
+    id: 3,
+    peer: ConversationPeerEntity(
+      id: 103,
+      name: 'Family Group',
+      image: 'https://example.com/group-avatar.jpg',
+      lastSeen: 'Just now',
+      isOnline: true,
+    ),
+    isGroupChat: true,
+    lastMessage: LastMessageModel(
+      id: 203,
+      status: 1, // Sent
+      messageOrFileLabel: 'Don\'t forget dinner at 7 PM!',
+      time: 'Just now',
+      iAmSender: true,
+    ),
+  ),
+  ConversationModel(
+    id: 4,
+    peer: ConversationPeerEntity(
+      id: 104,
+      name: 'Work Chat',
+      image: 'https://example.com/work-avatar.jpg',
+      lastSeen: 'Last seen 2 days ago',
+      isOnline: false,
+    ),
+    isGroupChat: true,
+    lastMessage: LastMessageModel(
+      id: 204,
+      status: 2, // Delivered
+      messageOrFileLabel: 'Meeting at 10 AM tomorrow',
+      time: '3 days ago',
+      iAmSender: false,
+    ),
+  ),
+  ConversationModel(
+    id: 5,
+    peer: ConversationPeerEntity(
+      id: 105,
+      name: 'School Friends',
+      image: 'https://example.com/school-avatar.jpg',
+      lastSeen: '1 hour ago',
+      isOnline: true,
+    ),
+    isGroupChat: true,
+    lastMessage: LastMessageModel(
+      id: 205,
+      status: 1, // Sent
+      messageOrFileLabel: 'Can anyone bring the notes?',
+      time: '1 hour ago',
+      iAmSender: true,
+    ),
+  ),
+];

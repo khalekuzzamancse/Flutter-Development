@@ -1,7 +1,8 @@
 
-import 'package:auth/src/domain/domain.dart';
-
 import 'package:core/language/core_language.dart';
+
+import '../../domain/domain.dart';
+import '../../domain/register_model.dart' hide RegisterModel;
 
 
 part '_auth_controller.dart';

@@ -1,3 +1,5 @@
+import 'package:auth/chat/chat_and_messages_screen.dart';
+import 'package:auth/conversation/conversion_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_exit_app/flutter_exit_app.dart';
@@ -13,6 +15,7 @@ import 'package:snowchat_ios/feature/home/home.dart';
 import 'package:snowchat_ios/feature/misc/presentation/ui/welcome_screen.dart';
 import 'feature/chat/presentation/presentationLogic/picked_media_model.dart';
 import 'feature/chat/presentation/ui/forward_message.dart';
+import 'feature/contact_list/presentation/contact_list_screen.dart';
 import 'feature/di/auth_preserver.dart';
 import 'feature/di/global_controller.dart';
 import 'feature/misc/presentation/ui/splash_screen.dart';
@@ -25,7 +28,9 @@ void main() {
     runApp(MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      theme: AppColor.theme, home: const ConfirmExitDecorator(child: MyApp()),
+      theme: AppColor.theme,
+      home: ChatAndMessagesScreen(),
+      //home: const ConfirmExitDecorator(child: MyApp()),
     ));
 
 }
