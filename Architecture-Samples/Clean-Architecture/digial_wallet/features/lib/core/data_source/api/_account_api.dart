@@ -4,7 +4,6 @@ abstract interface class AccountApi {
   Future<List<CardEntity>> readCardsOrThrow();
   Future<List<ActiveLoanEntity>> readActiveLoansOrThrow();
   Future<SpendSummaryEntity> readSummaryOrThrow();
-  Future<List<BreakdownEntity>> readBreakDownsOrThrow();
   Future<List<TransactionEntity>> readTransactionsOrThrow();
   Future<SpendModelEntity> readSpendOrThrow();
 }

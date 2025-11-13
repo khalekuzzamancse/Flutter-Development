@@ -7,9 +7,15 @@ import '../../transaction/presentation/transaction_list.dart';
 import '../domain/models.dart';
 import 'home_controller.dart';
 import 'home_controller_impl.dart';
+
 part '_loans.dart';
+
 part '_transactions.dart';
+
 part '_paybill.dart';
+
+
+
 //@formatter:off
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -26,28 +32,34 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    controller.read();
-    controller.isLoading.listen((value) {
-      setState(() {
+      controller.read();
+      controller.isLoading.listenToStream(setState, (value) {
         isLoading=value;
-      });
     });
-    controller.loans.listen((value) {
-      setState(() {
+     controller.loans.listenToStream(setState,(value) {
         loans=value;
-      });
     });
-    controller.transactions.listen((value) {
-      setState(() {
+      controller.transactions.listenToStream(setState,(value) {
         transactions=value;
-      });
     });
   }
+  void listenToStream<T>(Stream<T> stream, Function(T) onData) {
+    stream.listen(
+        (value){
+          setState(() {
+            onData(value);
+          });
+        }
+    );
+  }
+
   @override
   void dispose() {
     controller.dispose();
     super.dispose();
   }
+
+  void listenState(VoidCallback fn)=> setState(fn);
 
   @override
   Widget build(BuildContext context) {

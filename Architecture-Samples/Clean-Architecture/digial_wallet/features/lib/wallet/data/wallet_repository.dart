@@ -10,10 +10,11 @@ class WalletRepositoryImpl implements Repository {
 
   @override
   Future<List<BreakdownModel>> readBreakDownData() async {
-    final entities = await _accountApi.readBreakDownsOrThrow();
-    return entities.map((entity) =>
-        BreakdownModel(label: entity.label, percentage: entity.percentage))
-        .toList();
+    throw UnimplementedError();
+    // final entities = await _accountApi.readBreakDownsOrThrow();
+    // return entities.map((entity) =>
+    //     BreakdownModel(label: entity.label, percentage: entity.percentage))
+    //     .toList();
   }
 
   @override

@@ -1,4 +1,16 @@
 part of '../../core_ui.dart';
+extension StreamStateExtension<T> on Stream<T> {
+  void listenToStream(StateSetter setState, Function(T) onData,
+      {Function? onError}) {
+    this.listen(
+          (value) {
+        setState(() {
+          onData(value);
+        });
+      },
+    );
+  }
+}
 class EmptyContentScreen extends StatelessWidget {
   final String? text;
   final IconData? icon;

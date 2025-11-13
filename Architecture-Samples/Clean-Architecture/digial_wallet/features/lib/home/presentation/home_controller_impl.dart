@@ -15,11 +15,7 @@ class HomeControllerImpl implements HomeController{
   final _loans=BehaviorSubject<List<LoanModel>>.seeded([]);
   final _transactions=BehaviorSubject<List<TransactionModel>>.seeded([]);
   final _statusMessage=BehaviorSubject<MessageToUi?>.seeded(null);
-  late final _error = Rx.combineLatest4<void, List<LoanModel>, List<TransactionModel>, MessageToUi?,void>(
-      _isLoading, _loans, _transactions, _statusMessage, (isLoading, loans, transactions, statusMessage) {
-      }
-  ).doOnError((error, stackTrace) {
-  }).share();
+
 
   @override
   Stream<bool> get isLoading =>_isLoading.stream;
