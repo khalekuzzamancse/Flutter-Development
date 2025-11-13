@@ -10,7 +10,6 @@ import '../domain/model/product_model.dart';
 import 'axis_data_model.dart';
 import 'controller.dart';
 
-//TODO: Implement to dispose the stream
 class ControllerImpl with CoreControllerMixin implements Controller {
   final _products = MutableStateFlow<List<ProductModel>>(List.empty());
   final _graphData = MutableStateFlow<SpendSummaryModel?>(null);

@@ -1,9 +1,9 @@
 part of 'home_screen.dart';
 
 class _RecentTransaction extends StatelessWidget {
-  final List<LoanModel> loanItems;
+  final List<TransactionModel> items;
 
-  const _RecentTransaction({super.key, required this.loanItems});
+  const _RecentTransaction({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +26,7 @@ class _RecentTransaction extends StatelessWidget {
             ]),
             SpacerVertical(16),
             Expanded(
-              child: RecentTransaction(),
+              child: RecentTransaction(transactions: items,),
             ),
           ],
         ),
@@ -36,63 +36,14 @@ class _RecentTransaction extends StatelessWidget {
 }
 
 class RecentTransaction extends StatelessWidget {
-  const RecentTransaction({super.key});
+  final List<TransactionModel> transactions;
+  const RecentTransaction({super.key, required this.transactions});
 
   @override
   Widget build(BuildContext context) {
-    final List<Transaction> transactions = [
-      Transaction(
-        iconPath: 'assets/citi.png',
-        title: 'Money transfer',
-        subtitle: 'Bank transfer',
-        amount: '- €10,480.00',
-        isPositive: false,
-        date: '3:00 PM',
-      ),
-      Transaction(
-        iconPath: 'assets/bank_of_america.png',
-        title: 'Cash withdrawal',
-        subtitle: 'Cash',
-        amount: '- €201.50',
-        isPositive: false,
-        date: '2:15 AM',
-      ),
-      Transaction(
-        iconPath: 'assets/amazon.png',
-        title: 'Amazon.com',
-        subtitle: 'Online payment',
-        amount: '- €184.00',
-        isPositive: false,
-        date: '5:40 PM',
-      ),
-      Transaction(
-        iconPath: 'assets/iofinance.png',
-        title: 'IOfinance UI kit',
-        subtitle: 'Online payment',
-        amount: '- €28.00',
-        isPositive: false,
-        date: '4:20 AM',
-      ),
-      Transaction(
-        iconPath: 'assets/socgen.png',
-        title: 'Income payment',
-        subtitle: 'Bank transfer',
-        amount: '+ €3,000.00',
-        isPositive: true,
-        date: '6:20 PM',
-      ),
-      Transaction(
-        iconPath: 'assets/airbnb.png',
-        title: 'Monthly home rent',
-        subtitle: 'Bank transfer',
-        amount: '- €400.00',
-        isPositive: false,
-        date: '1:00 AM',
-      ),
-    ];
 
     return ListView.builder(
-        itemCount: 2 * (transactions.length) - 1,
+        itemCount: transactions.length>0?2 * (transactions.length) - 1:0,
         itemBuilder: (context, index) {
           final even = index % 2 == 0;
           if (even) {
@@ -112,34 +63,34 @@ class TransactionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, List<Transaction>> groupedTransactions = {
+    final Map<String, List<TransactionModel>> groupedTransactions = {
       '28 August': [
-        Transaction(
-          iconPath: 'assets/citi.png',
+        TransactionModel(
+          image: 'assets/citi.png',
           title: 'Money transfer',
           subtitle: 'Bank transfer',
           amount: '- €10,480.00',
           isPositive: false,
           date: '3:00 PM',
         ),
-        Transaction(
-          iconPath: 'assets/bank_of_america.png',
+        TransactionModel(
+          image: 'assets/bank_of_america.png',
           title: 'Cash withdrawal',
           subtitle: 'Cash',
           amount: '- €201.50',
           isPositive: false,
           date: '2:15 AM',
         ),
-        Transaction(
-          iconPath: 'assets/amazon.png',
+        TransactionModel(
+          image: 'assets/amazon.png',
           title: 'Amazon.com',
           subtitle: 'Online payment',
           amount: '- €184.00',
           isPositive: false,
           date: '5:40 PM',
         ),
-        Transaction(
-          iconPath: 'assets/iofinance.png',
+        TransactionModel(
+          image: 'assets/iofinance.png',
           title: 'IOfinance UI kit',
           subtitle: 'Online payment',
           amount: '- €28.00',
@@ -148,16 +99,16 @@ class TransactionScreen extends StatelessWidget {
         ),
       ],
       '24 August': [
-        Transaction(
-          iconPath: 'assets/socgen.png',
+        TransactionModel(
+          image: 'assets/socgen.png',
           title: 'Income payment',
           subtitle: 'Bank transfer',
           amount: '+ €3,000.00',
           isPositive: true,
           date: '6:20 PM',
         ),
-        Transaction(
-          iconPath: 'assets/airbnb.png',
+        TransactionModel(
+          image: 'assets/airbnb.png',
           title: 'Monthly home rent',
           subtitle: 'Bank transfer',
           amount: '- €400.00',
@@ -181,7 +132,7 @@ class TransactionScreen extends StatelessWidget {
 // Transaction group (date + items)
 class TransactionGroup extends StatelessWidget {
   final String date;
-  final List<Transaction> transactions;
+  final List<TransactionModel> transactions;
 
   const TransactionGroup({
     super.key,
@@ -218,7 +169,7 @@ class TransactionGroup extends StatelessWidget {
 
 // Single transaction card
 class TransactionTile extends StatelessWidget {
-  final Transaction transaction;
+  final TransactionModel transaction;
 
   const TransactionTile({super.key, required this.transaction});
 

@@ -5,6 +5,7 @@ abstract interface class AccountApi {
   Future<List<ActiveLoanEntity>> readActiveLoansOrThrow();
   Future<SpendSummaryEntity> readSummaryOrThrow();
   Future<List<BreakdownEntity>> readBreakDownsOrThrow();
+  Future<List<TransactionEntity>> readTransactionsOrThrow();
   Future<SpendModelEntity> readSpendOrThrow();
 }
 
@@ -69,9 +70,22 @@ class CardEntity {
 }
 //@formatter:off
 class ActiveLoanEntity {
-  final String model, imageLink,price,date;
-  final int rating,ratingMax;
-
+  final String model, imageLink,price,date,status;
   const ActiveLoanEntity({required this.model, required this.imageLink, required this.price,
-    required this.date, required this.rating, required this.ratingMax});
+    required this.date, required this.status});
+}
+class TransactionEntity {
+  final String image;
+  final String title;
+  final String subtitle;
+  final String amount;
+  final String date;
+
+  TransactionEntity({
+    required this.image,
+    required this.title,
+    required this.subtitle,
+    required this.amount,
+    required this.date,
+  });
 }

@@ -6,18 +6,48 @@ import 'package:flutter/material.dart';
 import '../../transaction/presentation/transaction_list.dart';
 import '../domain/models.dart';
 import 'home_controller.dart';
-
+import 'home_controller_impl.dart';
 part '_loans.dart';
-
 part '_transactions.dart';
-
 part '_paybill.dart';
-
 //@formatter:off
-class HomeScreen extends StatelessWidget {
-  final HomeController controller = HomeController();
-
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeControllerImpl controller = HomeControllerImpl();
+  var isLoading=false;
+  var transactions=List<TransactionModel>.empty();
+  var loans=List<LoanModel>.empty();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.read();
+    controller.isLoading.listen((value) {
+      setState(() {
+        isLoading=value;
+      });
+    });
+    controller.loans.listen((value) {
+      setState(() {
+        loans=value;
+      });
+    });
+    controller.transactions.listen((value) {
+      setState(() {
+        transactions=value;
+      });
+    });
+  }
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,37 +59,80 @@ class HomeScreen extends StatelessWidget {
         backgroundColor:bg, title: TextH1(text: 'Welcome, ${controller.user}'),
       ),
       backgroundColor: bg,
-      body: Column(
-        children: [
-          _PayBillSection(items: controller.billPayments),
-          SpacerVertical(16),
-       Expanded(
-         child: Container(
-             decoration: BoxDecoration(
-               color:background,
-               borderRadius: BorderRadius.only(
-                 topLeft: Radius.circular(cornerRadius),
-                 topRight: Radius.circular(cornerRadius),
-               )
+      body: LoadingOverlay(
+        isLoading: isLoading,
+        child: Column(
+          children: [
+            _PayBillSection(items: controller.billPayments),
+            SpacerVertical(16),
+         Expanded(
+           child: Container(
+               decoration: BoxDecoration(
+                 color:background,
+                 borderRadius: BorderRadius.only(
+                   topLeft: Radius.circular(cornerRadius),
+                   topRight: Radius.circular(cornerRadius),
+                 )
+               ),
+             child: Column(
+               children: [
+                 SpacerVertical(32),
+             StreamBuilder(
+               stream: controller.loans,builder: (context,snapshot){
+                 final data=snapshot.data??List.empty();
+                  return _ActiveLoanSection(loanItems: data);
+             }),
+                 Expanded(
+                     child: StreamBuilder(
+                         stream: controller.transactions,
+                         builder: (context,snapshot){
+                           final data=snapshot.data??List.empty();
+                           return _RecentTransaction(items: data);
+                         }
+                     )
+                 ),
+               ],
              ),
-           child: Column(
-             children: [
-               SpacerVertical(32),
-           _ActiveLoanSection(loanItems: controller.activeLoanItems),
-               Expanded(child: _RecentTransaction(loanItems: controller.activeLoanItems)),
-             ],
            ),
-         ),
-       )
+         )
 
 
-        ],
+          ],
+        ),
       )
     );
   }
 }
+class ActiveLoans extends StatefulWidget {
+  final HomeController controller;
+  const ActiveLoans({super.key, required this.controller});
 
+  @override
+  State<ActiveLoans> createState() => _ActiveLoansState();
+}
 
+class _ActiveLoansState extends State<ActiveLoans> {
+  late final controller=widget.controller;
+  var loans=List<LoanModel>.empty();
+  @override
+  void initState() {
+    super.initState();
+    controller.loans.listen((value) {
+      setState(() {
+        loans=value;
+      });
+    });
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    //controller.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
 
 //@formatter:off
 class Cards extends StatelessWidget {
@@ -79,7 +152,6 @@ class Cards extends StatelessWidget {
 
   }
 }
-
 
 //@formatter:off
 class _Card extends StatelessWidget {

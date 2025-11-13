@@ -10,4 +10,5 @@ part 'ui/ui/modifier.dart';
 part 'ui/ui/navigation.dart';
 part 'ui/ui/stream_builder_strategies.dart';
 part 'ui/ui/user_short_info.dart';
+part 'ui/ui/_loading.dart';
 

@@ -14,8 +14,7 @@ class AccountLocalDataSource implements AccountApi {
         "https://img.freepik.com/premium-vector/red-city-car-vector-illustration_648968-44.jpg?w=740",
         price: "\$399/M",
         date: "5th OCT",
-        rating: 48,
-        ratingMax: 60,
+        status:"pending",
       ),
       ActiveLoanEntity(
         model: "Nokia Y",
@@ -23,8 +22,7 @@ class AccountLocalDataSource implements AccountApi {
         "https://auspost.com.au/shop/static/WFS/AusPost-Shop-Site/-/AusPost-Shop-auspost-B2CWebShop/en_AU/feat-cat/mobile-phones/category-carousel/MP_UnlockedPhones_3.jpg",
         price: "\$299/M",
         date: "20 OCT",
-        rating: 36,
-        ratingMax: 50,
+        status: "approved"
       ),
     ];
   }
@@ -131,5 +129,53 @@ class AccountLocalDataSource implements AccountApi {
       currency: json['currency'] as String,
       spend: data,
     );
+  }
+
+  @override
+  Future<List<TransactionEntity>> readTransactionsOrThrow()async {
+    return [
+      TransactionEntity(
+        image: 'assets/citi.png',
+        title: 'Money transfer',
+        subtitle: 'Bank transfer',
+        amount: '-10,480.00',
+        date: '3:00 PM',
+      ),
+      TransactionEntity(
+        image: 'assets/bank_of_america.png',
+        title: 'Cash withdrawal',
+        subtitle: 'Cash',
+        amount: '-201.50',
+        date: '2:15 AM',
+      ),
+      TransactionEntity(
+        image: 'assets/amazon.png',
+        title: 'Amazon.com',
+        subtitle: 'Online payment',
+        amount: '-184.00',
+        date: '5:40 PM',
+      ),
+      TransactionEntity(
+        image: 'assets/iofinance.png',
+        title: 'IOfinance UI kit',
+        subtitle: 'Online payment',
+        amount: '-28.00',
+        date: '4:20 AM',
+      ),
+      TransactionEntity(
+        image: 'assets/socgen.png',
+        title: 'Income payment',
+        subtitle: 'Bank transfer',
+        amount: '+3,000.00',
+        date: '6:20 PM',
+      ),
+      TransactionEntity(
+        image: 'assets/airbnb.png',
+        title: 'Monthly home rent',
+        subtitle: 'Bank transfer',
+        amount: '-400.00',
+        date: '1:00 AM',
+      ),
+    ];
   }
 }

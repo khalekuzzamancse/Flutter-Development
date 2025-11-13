@@ -1,13 +1,14 @@
-class Transaction {
-  final String iconPath;
+
+class TransactionModel {
+  final String image;
   final String title;
   final String subtitle;
   final String amount;
   final bool isPositive;
   final String date;
 
-  Transaction({
-    required this.iconPath,
+  TransactionModel({
+    required this.image,
     required this.title,
     required this.subtitle,
     required this.amount,

@@ -1,6 +1,7 @@
 import 'package:features/core/data_source/data_source.dart';
 import 'package:features/home/domain/models.dart';
 import 'package:features/home/domain/repository.dart';
+import 'package:features/transaction/domain/transaction_repository.dart';
 
 class HomeRepositoryImpl implements HomeRepository {
   late final AccountApi _accountApi = ApiFactory.create().accountApi;
@@ -28,5 +29,17 @@ class HomeRepositoryImpl implements HomeRepository {
       type: e.type,
     )).toList();
   }
+
+  @override
+  Future<List<TransactionModel>> readTransactionsOrThrow() async{
+    final entities=await _accountApi.readTransactionsOrThrow();
+    return entities.map((e) => TransactionModel(
+      image: e.image,
+      title: e.title,
+      subtitle: e.subtitle,
+      amount: e.amount,
+      isPositive: false,
+      date: e.date,
+    )).toList();
+  }
 }
-//TODO
