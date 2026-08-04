@@ -7,8 +7,6 @@ abstract interface class AccountApi {
   Future<List<TransactionEntity>> readTransactionsOrThrow();
   Future<SpendModelEntity> readSpendOrThrow();
 }
-
-
 class SpendSummaryEntity {
   final Map<String, TimePeriodEntity> data;
   final List<String> timePeriods;

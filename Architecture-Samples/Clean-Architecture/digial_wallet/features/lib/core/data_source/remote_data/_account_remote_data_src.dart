@@ -50,10 +50,10 @@ abstract class AccountRDSTemplate implements AccountApi{
   }
 
 }
-class AccountLocalServer extends AccountRDSTemplate {
+class AccountTestServer extends AccountRDSTemplate {
 
-  AccountLocalServer._();
-  static AccountApi create()=>AccountLocalServer._();
+  AccountTestServer._();
+  static AccountApi create()=>AccountTestServer._();
 
   @override
   List<ActiveLoanEntity> parseActiveLoans(dynamic json) {

@@ -1,6 +1,9 @@
 enum ConnectionState {
   none, waiting, active, done,
-}
+}     
+
+
+
 class AsyncSnapshot<T> {
 
 
@@ -35,7 +38,6 @@ class AsyncSnapshot<T> {
 
 
 
-
 abstract class StreamBuilderBase<T, S> extends StatefulWidget {
   /// Creates a [StreamBuilderBase] connected to the specified [stream].
   const StreamBuilderBase({super.key, required this.stream});
@@ -53,7 +55,7 @@ abstract class StreamBuilderBase<T, S> extends StatefulWidget {
   State<StreamBuilderBase<T, S>> createState() => _StreamBuilderBaseState<T, S>();
 }
 
-/// State for [StreamBuilderBase].
+/// State for [StreamBuilderBase]. 
 class _StreamBuilderBaseState<T, S> extends State<StreamBuilderBase<T, S>> {
   StreamSubscription<T>? _subscription;
   late S _summary;

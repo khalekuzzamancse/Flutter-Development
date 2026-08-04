@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'resource_factory.dart';
 
-
 ///Has top bar with back navigation
 class GenericScreen extends StatelessWidget {
   final String title;
